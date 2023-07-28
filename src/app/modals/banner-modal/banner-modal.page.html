@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{item.promo_name}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img *ngIf="item" src="https://admin.ulidolphin.com/assets/uploads/banner/{{item.picture_location}}" style="width: 100%; padding: 0px 0px; display: block">    
+  <div class="konten-banner" *ngIf="item">
+      <span [innerHTML]="item.promo_text"></span>
+  </div>
+</ion-content>

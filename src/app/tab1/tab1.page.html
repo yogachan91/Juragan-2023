@@ -1,0 +1,286 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class="top-grid">
+    <ion-row>
+      <!-- <ion-col size="1" class="top-icon">
+        <ion-icon name="storefront-outline"></ion-icon>
+      </ion-col> -->
+      <ion-col size="10">
+        <div class="toko-nama">{{userData.store_name}}</div>
+        <div (click)="copy(userData.outlet_id)" class="toko-id">{{userData.outlet_id}}</div>
+      </ion-col>
+      <ion-col size="2">
+        <ion-icon name="options-outline" id="opt" class="top-icon-right"></ion-icon>
+        <ion-popover trigger="opt" [dismissOnSelect]="true">
+          <ng-template >
+            <ion-content>
+              <ion-list>
+                
+                <ion-item [button]="true" [detail]="false" (click)="notifikasi()">
+                  <ion-icon name="notifications-outline" slot="start"></ion-icon>
+                  <ion-label>Notifikasi</ion-label>
+                </ion-item>
+                <ion-item [button]="true" [detail]="false" (click)="reload()">
+                  <ion-icon name="reload-circle-outline" slot="start"></ion-icon>
+                  <ion-label>Reload</ion-label>
+                </ion-item>
+
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div style="height:30px"></div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card class="top-card">
+    <ion-card-content>
+      <ion-grid>
+
+
+        <ion-row *ngIf="statuscluster==1">
+          <ion-col size="7">
+            <span class="point-txt-lg">Sisa Poin 2022</span><br>
+            <span (click)="transaksi()" class="point-txt-strong" *ngIf="balance">{{balance.remain_point_old|number}}</span> <span class="point-txt-sm">Poin</span>
+            <div>
+            <span class="point-txt-strongtextold">Poin {{newyear}} </span><span (click)="transaksi()" class="point-txt-strongold" *ngIf="balance">{{balance.remain_point_new|number}}</span><span class="point-txt-strongtextold">Poin</span>
+          </div>
+          </ion-col>
+          <ion-col size="5" style="text-align: right;">
+            <!-- <span class="level-txt-link">Lihat Cluster</span><br> -->
+            <!-- <span *ngIf="balance" [ngClass]="'level-txt-strong-'+balance.cluster">{{balance.cluster}}</span> -->
+            <div class="totalbelanja">Rata-rata belanja per bulan</div>
+            <div class="totalbelanjavalue">Rp. {{totalbelanja|number:'1.0-0'}}</div>
+            <div><span style="color:{{warna}}">{{cluster}}</span></div>
+          </ion-col>
+        </ion-row> 
+        
+        <ion-row  *ngIf="statuscluster==0">
+          <ion-col size="6">
+            <span class="point-txt-lg">Poin Anda</span><br>
+            <span (click)="transaksi()" class="point-txt-strong" *ngIf="balance">{{balance.remain_point_new|number}}</span> <span class="point-txt-sm">Poin</span>
+          </ion-col>
+          <ion-col size="6" style="text-align: right;">
+            <!-- <span class="level-txt-link">Lihat Cluster</span><br> -->
+            <!-- <span *ngIf="balance" [ngClass]="'level-txt-strong-'+balance.cluster">{{balance.cluster}}</span> -->
+            <div class="totalbelanja">Rata-Rata Belanja Tahun Ini</div>
+            <div class="totalbelanjavalue">Rp. {{totalbelanja|number:'1.0-0'}}</div>
+            <div><span style="color:{{warna}}">{{cluster}}</span></div>
+            <div *ngIf="isparticipant_juragan_plus==1" style="line-height: 8px;"><span style="color:#3D5CFF; font-size: 12px;">Juragan Plus</span></div>
+          </ion-col>
+        </ion-row>  
+
+
+
+        <!-- <ion-row>
+          <ion-col>
+            <div [ngClass]="'bar-'+userData.cluster"></div>
+          </ion-col>
+        </ion-row> -->
+        <ion-row>
+          <ion-col *ngIf="balance">
+            <!-- <ion-progress-bar *ngIf="balance.cluster=='Classic'" color="secondary" value="0.9"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Gold'" color="warning" value="0.5"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Bronze'" color="danger" value="0.5"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Silver'" color="medium" value="0.5"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Platinum'" color="dark" value="0.5"></ion-progress-bar> -->
+            <ion-progress-bar *ngIf="balance.cluster=='Classic'" color="secondary" value="1"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Gold'" color="warning" value="1"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Bronze'" color="danger" value="1"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Silver'" color="medium" value="1"></ion-progress-bar>
+            <ion-progress-bar *ngIf="balance.cluster=='Platinum'" color="dark" value="1"></ion-progress-bar>
+            <!-- <small style="font-size:.6em">Ayo belanja terus untuk naik cluster</small> -->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-slides *ngIf="slidebanner" [options]="slideOpts">
+          <ion-slide *ngFor="let s of slidebanner" (click)="goToBannerDetail(s)">
+            <img style="border-radius: 10px;" src="https://admin.ulidolphin.com/assets/uploads/banner/{{s.picture_location}}">
+          </ion-slide>          
+        </ion-slides>
+        <ion-slides *ngIf="!slidebanner" loop="true">
+          <ion-slide><img src="../../assets/imgs/loading.gif" style="border-radius: 10px; max-height:126px"></ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" style="text-align: right;">
+        <u class="promo-link" (click)="promo2('promo')"><span class="promo-link" >Lihat Semua</span></u>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  
+  
+<!-- 
+  <ion-grid class="top5-head">
+    <ion-row>
+      <ion-col>
+        <div class="top5-title">Top 5 Kategori Belanja Anda</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div></div>
+  <ion-grid class="top5-content" *ngFor="let t of top5">
+    <ion-row>
+      <ion-col style="padding-top:0px; padding-bottom:0px">
+        <div class="top5-cat">{{t.category}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="top5-leftmonth">{{prevMonth|date:'MMM'}}</div>
+        <div class="top5-left">Rp.{{t.total_previous|number:'1.0-0'}}</div>
+      </ion-col>
+      <ion-col>
+        <div class="top5-rightmonth">{{curMonth|date:'MMM'}}</div>
+        <div class="top5-right">Rp.{{t.total_current|number:'1.0-0'}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <!-- <ion-grid class="top5-head">
+    <ion-row>
+      <ion-col>
+        <div class="top5-title">Top 5 Brand</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="top5-content" *ngFor="let t of top5brand">
+    <ion-row>
+      <ion-col style="padding-top:0px; padding-bottom:0px">
+        <div class="top5-cat">{{t.Brand}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="top5-leftmonth">{{prevMonth|date:'MMM'}}</div>
+        <div class="top5-left">Rp.{{t.total_previous|number:'1.0-0'}}</div>
+      </ion-col>
+      <ion-col>
+        <div class="top5-rightmonth">{{curMonth|date:'MMM'}}</div>
+        <div class="top5-right">Rp.{{t.total_current|number:'1.0-0'}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <!-- <ion-grid class="top5-content">
+    <ion-row>
+      <ion-col>
+        <canvas #doughnutCanvas style="height:20vh; width:40vw"></canvas>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  
+  <ion-grid>
+    <!-- <ion-row class="icon-redeems">
+      <ion-col size="4">
+        <img src="../assets/icon/button-redeem.svg">
+      </ion-col>
+      <ion-col size="4">
+        <img src="../assets/icon/button-ppob.svg">
+      </ion-col>
+      <ion-col size="4">
+        <img src="../assets/icon/button-ewallet.svg">
+      </ion-col>
+    </ion-row> -->
+    
+  </ion-grid>
+
+  <ion-card class="bottom-card" style="padding: 0px;">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+        <ion-col size="9">
+          <h2>Target Juragan</h2>
+          <p style="font-size: 10px;">
+            Ayo capai targetnya, dan tukarkan poin anda dengan berbagai hadiah menarik
+          </p>
+        </ion-col>
+        <ion-col size="3" style="text-align: right;">
+          <img src="../assets/image_new/puzzle_icon.png">
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" >
+            <ion-slides  [options]="slideOptstarget">
+              <!-- <ion-slide *ngFor="let s of slideinfo" (click)="goToBannerDetail(s)">
+                <img style="border-radius: 10px;" src="https://admin.ulidolphin.com/assets/uploads/banner/{{s.picture_location}}">
+              </ion-slide>           -->
+              <div *ngIf="!banner_bu">
+                <img src="../../assets/imgs/loading.gif"><br>
+              </div>
+              <ion-slide *ngFor="let val of banner_bu">
+                <img  (click)="riwayat_transaksi(val.id_target_bu)" style="border-radius: 10px;" src="{{ val.url_banner }}">  
+              </ion-slide> 
+            </ion-slides>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+
+          
+          
+          <!-- <ion-col size="4" style="text-align: right;">
+            <img src="../assets/icon/meetup.svg">
+          </ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+ 
+  <ion-grid class="redeem-button" (click)="openRedeemModal()">
+    <ion-row>
+      <ion-col class="col-redeem" size="3">
+        <img class="img-redeem" src="../assets/icon/gift_icon.png">
+      </ion-col>
+      <ion-col>
+        <div class="redeem-title">Gift</div>
+        <div class="redeem-subtitle">Klik di sini untuk menukarkan poin</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-row class="button-supports">
+    <ion-col  (click)="unilever_produk()">
+      <img class="img-supports" src="../assets/image_new/button_produk_uli.png">
+    </ion-col>
+  </ion-row>
+  
+  <ion-row class="button-supports" style="margin-top: -13px;">
+    <ion-col size="6" (click)="promo2('info')">
+        <img class="img-supports" src="../assets/image_new/info_uli1.png">
+    </ion-col>
+    <ion-col size="6" (click)="openFAQ()">
+      <img class="img-supports" src="../assets/icon/faq_button.png">
+    </ion-col>
+  </ion-row>
+  <ion-row class="button-supports" style="margin-top: -13px;">
+    <ion-col  (click)="openmodalbelanja()">
+      <img class="img-supports" src="../assets/image_new/peringkat_belanja1.png">
+    </ion-col>
+  </ion-row>
+  <br>
+  
+
+
+  <!-- <ion-button id="open-custom-dialog" expand="block">Open Custom Dialog</ion-button>
+  <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+    <ng-template>
+      <div class="wrapper">
+        <h1>Update Aplikasi</h1>
+        <ion-list lines="none">
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal> -->
+
+
+</ion-content>

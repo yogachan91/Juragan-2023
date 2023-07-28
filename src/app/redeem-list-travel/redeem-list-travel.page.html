@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Redeem List Travel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let pr of pointreward" (click)="gotoredeemdetail(pr)" button>
+      <ion-thumbnail>
+        <!-- <img src="../assets/icon/lm.svg" style="padding:7px;"> -->
+        <img *ngIf="pr.pict_location" src="https://admin.ulidolphin.com/assets/uploads/redeem/{{pr.pict_location}}">
+      </ion-thumbnail>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            {{pr.gift_name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="poin">
+            {{pr.point|number}} Poin<span *ngIf="pr.multiply_amount > 0"> &middot; {{pr.multiply_amount | currency:'IDR':false}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-item>
+  </ion-list>
+  <p>&nbsp;</p>
+</ion-content>

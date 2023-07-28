@@ -1,0 +1,887 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="background" color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Target </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid color="unilever">
+    <ion-row>
+      <ion-col *ngIf="banner_bu_corporate=='1'">
+        <ion-segment
+          [(ngModel)]="segmen"
+          [scrollable]="false"
+          mode="ios"
+          value="target"
+          style="background-color: #ffd08a"
+        >
+          <ion-segment-button value="banner_bu_corporate">
+            <ion-label>{{nama_bu_corp}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col *ngIf="home_care=='1'">
+        <ion-segment
+          [(ngModel)]="segmen"
+          [scrollable]="false"
+          mode="ios"
+          value="target"
+          style="background-color: #ffd08a"
+        >
+          <ion-segment-button value="homecare">
+            <ion-label>{{nama_home_care}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col *ngIf="personal_care=='1'">
+        <ion-segment
+          [(ngModel)]="segmen"
+          [scrollable]="false"
+          mode="ios"
+          value="target"
+          style="background-color: #ffd08a"
+        >
+          <ion-segment-button value="personal_care">
+            <ion-label>{{nama_personal_care}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col *ngIf="nutrition=='1'">
+        <ion-segment
+          [(ngModel)]="segmen"
+          [scrollable]="false"
+          mode="ios"
+          value="target"
+          style="background-color: #ffd08a"
+        >
+          <ion-segment-button value="nutrition">
+            <ion-label>{{nama_nutrition}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col *ngIf="bw=='1'">
+        <ion-segment
+          [(ngModel)]="segmen"
+          [scrollable]="false"
+          mode="ios"
+          value="target"
+          style="background-color: #ffd08a"
+        >
+          <ion-segment-button value="bandw">
+            <ion-label>{{nama_bw}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="segmen">
+    <div *ngSwitchCase="'banner_bu_corporate'">
+      <div>
+        <ion-segment [(ngModel)]="segmendetailcorp" style="color: blue">
+          <ion-segment-button value="fop">
+            <ion-label>FOP</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="bonus_growth">
+            <ion-label>BONUS GROWTH</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="produk">
+            <ion-label>DISTRIBUTION</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="segmendetailcorp" style="color: blue">
+          <!-- <ion-segment-button value="loyalty">
+          <ion-label>LOYALTY</ion-label>
+        </ion-segment-button> -->
+          <!-- <ion-segment-button value="category">
+            <ion-label>CATEGORY</ion-label>
+          </ion-segment-button> -->
+        </ion-segment>
+      </div>
+      <br />
+
+      <div [ngSwitch]="segmendetailcorp">
+        <div *ngSwitchCase="'loyalty'" >
+          <div *ngIf="target_corporate_loyalty">
+            <div class="card_2" *ngFor="let v of target_corporate_loyalty">
+              <div>
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'fop'">
+          <div *ngIf="!fop_poin">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <div *ngIf="isfop==0" style="margin-top: -20px;">
+            <center >
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <div  *ngIf="isfop==1">
+          <div *ngIf="!fop_poin">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <ion-grid *ngIf="fop_poin" style="margin-top: -35px;">
+            <div *ngFor="let v of fop_poin">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.target_fop|number}}
+                  </ion-col>
+                </ion-row>
+                <!-- <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_simulasi}} </ion-col>
+                </ion-row> -->
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Pencapaian}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_total_fop|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row >
+                  <ion-col class="bonus-title"> {{v.Bar_Total_Sales}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.isValue}} {{v.rpp_total_sales|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.simulasi_poin|number}}
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+        </div>
+        </div>
+
+        <div *ngSwitchCase="'bonus_growth'">
+          <div *ngIf="isgrowth==0" style="margin-top: -20px;">
+            <center>
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <div  *ngIf="isgrowth==1">
+          <ion-grid>
+            <div *ngFor="let v of bonus_growth" style="margin-top: -35px;">
+              <!-- <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div> -->
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi_max}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi_max|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Aktual_Point}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_aktual_point|number}}
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'category'">
+          <div *ngIf="iscorpcategory==0" style="margin-top: -20px;">
+            <center>
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <div  *ngIf="iscorpcategory==1">
+          <ion-grid>
+            <div *ngFor="let v of target_corporate_category" style="margin-top: -35px;">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+          </div>
+        </div>
+
+        
+        <div *ngSwitchCase="'produk'" style="margin-top: -20px;">
+          <div *ngIf="!header_target_dist && target_corporate_produk_detail ==null">
+            <center>
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <div *ngIf="target_corporate_produk_detail !=null">
+          <div *ngIf="!header_target_dist">
+           
+          </div>
+          <div style="padding: 5px" *ngIf="header_target_dist">
+            <div [innerHTML]="header_target_dist"></div>
+          </div>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Target (Baspack) </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_corporate_produk.TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Pencapaian </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_corporate_produk.PENCAPAIAN|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Sisa Target </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_corporate_produk.SISA_TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Total Sales </ion-col>
+            <ion-col class="bonus-text_bold">{{target_corporate_produk.isValue}} {{target_corporate_produk.Total_Sales|number}} </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Aktual Point </ion-col>
+            <ion-col class="bonus-text_bold"> {{target_corporate_produk.Aktual_Point|number}} </ion-col>
+          </ion-row>
+
+          <ion-grid *ngFor="let v of target_corporate_produk_detail">
+            <div class="card_2" (click)="lihat_detail_corporate_distribution(v.BASEPACK_TITLE)">
+              <center class="bonus-title_bold">{{v.BASEPACK_TITLE}}</center>
+              <ion-row>
+                <ion-col class="bonus-title"> Target (Pcs) </ion-col>
+                <ion-col class="bonus-text"> {{v.TARGET|number}} Pcs</ion-col>
+              </ion-row>
+              <ion-row class="bonus-box">
+                <ion-col class="bonus-title"> Pencapaian (Pcs) </ion-col>
+                <ion-col class="bonus-text"> {{v.QUANTITY|number}} Pcs</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="bonus-title"> Sisa Target (Pcs) </ion-col>
+                <ion-col class="bonus-text"> {{v.SISA_TARGET|number}} Pcs</ion-col>
+              </ion-row>
+              
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div *ngSwitchCase="'homecare'" >
+      <ion-segment [(ngModel)]="segmendetailhomecare" style="color: blue">
+        <!-- <ion-segment-button value="loyalty">
+          <ion-label>LOYALTY</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="produk">
+          <ion-label>PRODUK</ion-label>
+        </ion-segment-button> -->
+        <ion-segment-button value="category">
+          <ion-label>CATEGORY</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <br />
+      <div [ngSwitch]="segmendetailhomecare">
+        <div *ngSwitchCase="'loyalty'">
+          <div *ngIf="!target_homecare_loyalty">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <div *ngIf="target_homecare_loyalty">
+            <div class="card_2">
+              <div *ngFor="let v of target_homecare_loyalty">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'category'" >
+          <div *ngIf="ishomecare_category==0" style="margin-top: -20px;">
+            <center >
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <ion-grid *ngIf="ishomecare_category==1">
+            <div *ngFor="let v of target_homecare_category" style="margin-top: -35px;">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title">{{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_target|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text">{{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+        </div>
+        <div *ngSwitchCase="'produk2'">
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Target (Baspack) </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_homecare_produk.TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Pencapaian </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_homecare_produk.PENCAPAIAN|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Sisa Target </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_homecare_produk.SISA_TARGET|number }}
+            </ion-col>
+          </ion-row>
+
+          <ion-grid *ngFor="let v of target_homecare_produk_detail">
+            <div class="card_2">
+              <center class="bonus-title_bold">{{v.BASEPACK_TITLE}}</center>
+              <ion-row>
+                <ion-col class="bonus-title"> Target (Psc) </ion-col>
+                <ion-col class="bonus-text"> {{v.TARGET|number}} </ion-col>
+              </ion-row>
+              <ion-row class="bonus-box">
+                <ion-col class="bonus-title"> Pencapaian </ion-col>
+                <ion-col class="bonus-text"> {{v.PENCAPAIAN|number}} </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="bonus-title"> Sisa Target </ion-col>
+                <ion-col class="bonus-text"> {{v.SISA_TARGET|number}} </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'personal_care'">
+      <ion-segment [(ngModel)]="segmendetailpersonalcare" style="color: blue">
+        <!-- <ion-segment-button value="loyalty">
+          <ion-label>LOYALTY</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="produk">
+          <ion-label>PRODUK</ion-label>
+        </ion-segment-button> -->
+        <ion-segment-button value="category">
+          <ion-label>CATEGORY</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <br />
+      <div [ngSwitch]="segmendetailpersonalcare">
+        <div *ngSwitchCase="'loyalty'">
+          <div *ngIf="!target_personal_loyalty">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <div *ngIf="target_personal_loyalty">
+            <div class="card_2">
+              <div *ngFor="let v of target_personal_loyalty">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'category'" >
+          <div *ngIf="istarget_personal_category==0" style="margin-top: -20px;">
+            <center >
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <ion-grid *ngIf="istarget_personal_category==1">
+            <div *ngFor="let v of target_personal_category" style="margin-top: -35px;">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.isValue}} {{v.rpp_target|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+        </div>
+        <div *ngSwitchCase="'produk'">
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Target (Baspack) </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_personal_care_produk.TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Pencapaian </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_personal_care_produk.PENCAPAIAN|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Sisa Target </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_personal_care_produk.SISA_TARGET|number }}
+            </ion-col>
+          </ion-row>
+
+          <ion-grid *ngFor="let v of target_personal_produk_detail">
+            <div class="card_2">
+              <center class="bonus-title_bold">{{v.BASEPACK_TITLE}}</center>
+              <ion-row>
+                <ion-col class="bonus-title"> Target (Psc) </ion-col>
+                <ion-col class="bonus-text"> {{v.TARGET|number}} </ion-col>
+              </ion-row>
+              <ion-row class="bonus-box">
+                <ion-col class="bonus-title"> Pencapaian </ion-col>
+                <ion-col class="bonus-text"> {{v.PENCAPAIAN|number}} </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="bonus-title"> Sisa Target </ion-col>
+                <ion-col class="bonus-text"> {{v.SISA_TARGET|number}} </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'nutrition'">
+      <ion-segment [(ngModel)]="segmendetailnutrition" style="color: blue">
+        <!-- <ion-segment-button value="loyalty">
+          <ion-label>LOYALTY</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="produk">
+          <ion-label>PRODUK</ion-label>
+        </ion-segment-button> -->
+        <ion-segment-button value="category">
+          <ion-label>CATEGORY</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <br />
+      <div [ngSwitch]="segmendetailnutrition">
+        <div *ngSwitchCase="'loyalty'">
+          <div *ngIf="!target_nutrition_loyalty">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <div *ngIf="target_nutrition_loyalty">
+            <div class="card_2">
+              <div *ngFor="let v of target_nutrition_loyalty">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_target|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'category'" >
+          <div *ngIf="istarget_nutrition_category==0" style="margin-top: -20px;">
+            <center>
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <ion-grid *ngIf="istarget_nutrition_category==1">
+            <div *ngFor="let v of target_nutrition_category" style="margin-top: -35px;">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_target|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_simulasi|number}} </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+        </div>
+        <div *ngSwitchCase="'produk'">
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Target (Baspack) </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_nutrition_produk.TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Pencapaian </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_nutrition_produk.PENCAPAIAN|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Sisa Target </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_nutrition_produk.SISA_TARGET|number }}
+            </ion-col>
+          </ion-row>
+
+          <ion-grid *ngFor="let v of target_nutrition_produk_detail">
+            <div class="card_2">
+              <center class="bonus-title_bold">{{v.BASEPACK_TITLE}}</center>
+              <ion-row>
+                <ion-col class="bonus-title"> Target (Psc) </ion-col>
+                <ion-col class="bonus-text"> {{v.TARGET|number}} </ion-col>
+              </ion-row>
+              <ion-row class="bonus-box">
+                <ion-col class="bonus-title"> Pencapaian </ion-col>
+                <ion-col class="bonus-text"> {{v.PENCAPAIAN|number}} </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="bonus-title"> Sisa Target </ion-col>
+                <ion-col class="bonus-text"> {{v.SISA_TARGET|number}} </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'bandw'">
+      <ion-segment [(ngModel)]="segmendetailbw" style="color: blue">
+        <!-- <ion-segment-button value="loyalty">
+          <ion-label>LOYALTY</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="produk">
+          <ion-label>PRODUK</ion-label>
+        </ion-segment-button> -->
+        <ion-segment-button value="category">
+          <ion-label>CATEGORY</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <br />
+      <div [ngSwitch]="segmendetailbw">
+        <div *ngSwitchCase="'loyalty'">
+          <div *ngIf="!target_bw_loyalty">
+            <center>
+              <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+            </center>
+          </div>
+          <div *ngIf="target_bw_loyalty">
+            <div class="card_2">
+              <div *ngFor="let v of target_bw_loyalty">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_target|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{v.rpp_simulasi|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'category'" >
+          <div *ngIf="istarget_bw_category==0" style="margin-top: -20px;">
+            <center>
+              <h5>Tidak ada data pada bulan ini</h5>
+            </center>
+          </div>
+          <ion-grid *ngIf="istarget_bw_category==1">
+            <div *ngFor="let v of target_bw_category" style="margin-top: -35px;">
+              <div class="card_2">
+                <div [innerHTML]="v.Bar_Title_Target"></div>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Target}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_target|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title">
+                    {{v.Bar_Title_Simulasi}}
+                  </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_simulasi|number}} </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Capai}} </ion-col>
+                  <ion-col class="bonus-text">{{v.isValue}} {{v.rpp_capai|number}} </ion-col>
+                </ion-row>
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> {{v.Bar_Title_Sisa}} </ion-col>
+                  <ion-col class="bonus-text"> {{v.rpp_sisa|number}} </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </ion-grid>
+        </div>
+        <div *ngSwitchCase="'produk'">
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Target (Baspack) </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_bw_produk.TARGET|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Pencapaian </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_bw_produk.PENCAPAIAN|number }}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box_2">
+            <ion-col class="bonus-title_bold"> Sisa Target </ion-col>
+            <ion-col class="bonus-text_bold">
+              {{target_bw_produk.SISA_TARGET|number }}
+            </ion-col>
+          </ion-row>
+
+          <ion-grid *ngFor="let v of target_bw_produk_detail">
+            <div class="card_2">
+              <center class="bonus-title_bold">{{v.BASEPACK_TITLE}}</center>
+              <ion-row>
+                <ion-col class="bonus-title"> Target (Psc) </ion-col>
+                <ion-col class="bonus-text"> {{v.TARGET|number}} </ion-col>
+              </ion-row>
+              <ion-row class="bonus-box">
+                <ion-col class="bonus-title"> Pencapaian </ion-col>
+                <ion-col class="bonus-text"> {{v.PENCAPAIAN|number}} </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="bonus-title"> Sisa Target </ion-col>
+                <ion-col class="bonus-text"> {{v.SISA_TARGET|number}} </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</ion-content>

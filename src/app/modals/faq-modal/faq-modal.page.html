@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>QNA</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="rows" *ngFor="let fq of faqs">
+    <ion-row>
+      <ion-col><div class="q">{{fq.question}}</div></ion-col>      
+    </ion-row>
+    <ion-row>
+      <ion-col><div class="a" [innerHTML]="fq.answer"></div></ion-col>      
+    </ion-row>
+  </ion-grid>
+</ion-content>

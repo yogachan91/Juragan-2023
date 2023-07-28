@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Terms & Conditions</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <h2>Disclaimer</h2>
+    <p>
+    Pendaftaran atau registrasi pada aplikasi JURAGAN merupakan sarana untuk menghubungkan Anda dengan PT Unilever Indonesia Tbk sebagai pemilik, penggagas, dan penanggung jawab atas layanan Aplikasi JURAGAN dan semua promosi yang berhubungan dengan merek JURAGAN.
+    </p>
+    <p>
+    Aplikasi JURAGAN tidak memberikan jaminan tentang kelengkapan, keandalan dan ketepatan informasi. Setiap tindakan yang Anda lakukan atas informasi yang Anda temukan pada Aplikasi JURAGAN, secara keseluruhan menjadi resiko Anda sendiri. PT Unilever Indonesia Tbk tidak akan bertanggung jawab atas segala kerugian dan/atau kerusakan dalam bentuk apapun sehubungan dengan penggunaan Aplikasi JURAGAN.
+  </p>
+  <p>
+    Kami mengumpulkan dan memproses informasi pribadi Anda, sesuai dengan data - data ketika Anda mendaftar pada Aplikasi JURAGAN, dan semua foto atau gambar yang dikirim melalui Aplikasi JURAGAN sepenuhnya akan menjadi milik PT Unilever Indonesia Tbk.
+  </p>
+  <p>
+    Kami tidak menjamin keamanan database, dan Kami juga tidak menjamin bahwa data yang Anda berikan tidak akan ditahan/terganggu ketika sedang dikirimkan kepada Kami. Setiap pengiriman segala bentuk informasi oleh Anda kepada Kami merupakan resiko Anda sendiri.
+  </p>
+  <p>
+    Kami dapat, berdasarkan kebijakan Kami, memberikan promosi-promosi yang dapat ditukar untuk manfaat terkait dengan layanan pada Aplikasi JURAGAN. Anda setuju bahwa Anda hanya akan menggunakan promosi tersebut sebagaimana promosi tersebut dimaksudkan dan tidak akan menyalahgunakan, menggandakan, menjual, atau mengalihkan promosi tersebut dengan cara apapun
+  </p>
+  <p>
+    Anda tidak diperkenankan untuk membahayakan, mengubah atau memodifikasi Layanan dan Aplikasi JURAGAN atau mencoba untuk membahayakan, mengubah atau memodifikasi Layanan dan Aplikasi JURAGAN dengan cara apapun.
+  </p>
+  <p>
+    JURAGAN, termasuk nama dan logo, Situs Web, Layanan, dan Aplikasi, dilindungi oleh hak cipta, merek dagang dan hak-hak lain yang disediakan berdasarkan hukum Negara Republik Indonesia. PT Unilever Indonesia Tbk (dan pemberi lisensi Kami, sebagaimana berlaku) secara eksklusif memiliki semua hak, kepemilikan dan kepentingan dalam dan terhadap Aplikasi, termasuk semua hak kekayaan intelektual terkait.
+    </p>
+    <h2>Persetujuan</h2>
+    <p>
+    Dengan menggunakan dan membaca ketentuan di atas, Anda dengan ini setuju secara langsung maupun tidak langsung untuk menyetujui disclaimer Kami dan setuju dengan ketentuan-ketentuannya.
+  </p>
+  <p>
+    <strong>PT Unilever Indonesia Tbk</strong> akan memiliki hak untuk menyelidiki dan menuntut setiap pelanggaran di atas selama yang dimungkinkan oleh hukum.
+    </p> -->
+    <div [innerHTML]="textdisclaimer">
+    </div>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button fill="solid" expand="block" (click)="agree()">
+      <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+      Saya Menyatakan Setuju
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Konfirmasi Alamat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding" *ngIf="alamat_pengiriman">
+    <ion-grid>
+
+      <ion-row class="form-row">
+        <ion-col>
+        <div class="form-title">Nama Penerima</div>
+        <div class="form-text">{{alamat_pengiriman.nama_penerima}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">No. Telp Penerima</div>
+          <div class="form-text">{{alamat_pengiriman.no_telp}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Nama Jalan</div>
+          <div class="form-text">{{alamat_pengiriman.nama_jalan}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Nomor Rumah</div>
+          <div class="form-text">{{alamat_pengiriman.no_rumah}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Provinsi</div>
+          <div class="form-text">{{alamat_pengiriman.provinsi}}</div>              
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Kota/Kabupaten</div>
+          <div class="form-text">{{alamat_pengiriman.kota}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Kecamatan</div>
+          <div class="form-text">{{alamat_pengiriman.kecamatan}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Kelurahan/Desa</div>
+          <div class="form-text">{{alamat_pengiriman.kelurahan}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="form-row">
+        <ion-col>
+          <div class="form-title">Kode Pos</div>
+          <div class="form-text">{{alamat_pengiriman.kode_pos}}</div>
+        </ion-col>
+      </ion-row>
+        
+    </ion-grid>
+    
+    <div class="ion-padding">
+      <div style="color:#444; font-size: small; font-style: italic; padding:3px 10px">
+        Anda bisa melakukan perubahan Alamat Pengiriman melalui halaman Akun Anda, akses melalui Home page, pilih tab 'Akun' kemudian 'Profil Toko' dan lakukan 'Edit Profil/Alamat'
+      </div>
+      <ion-button expand="block" (click)="submit()" color="primary">Kirim Hadiah Ke Alamat Ini</ion-button>
+    </div>
+  </div>
+  <div *ngIf="!alamat_pengiriman">
+    <div class="ion-padding" style="color:#444; font-size: small; font-style: italic; padding:3px 10px">
+      <strong>Anda belum mengisi Alamat Pengiriman Hadiah,</strong>Anda bisa melakukan perubahan Alamat Pengiriman melalui halaman Home page, pilih tab 'Akun' kemudian 'Profil Toko' dan lakukan 'Edit Profil/Alamat'
+      <ion-button expand="block" (click)="home()" color="primary">Kembali ke halaman depan</ion-button>
+    </div>
+    
+  </div>
+</ion-content>

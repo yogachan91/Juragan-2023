@@ -1,0 +1,27 @@
+<div style="padding:25px;border-radius:10px;">
+<div style="background-color: white;padding:10px; margin-top: 130px;">
+<div style="text-align: center;">
+<h5>Hai Juragan!</h5>
+</div>
+<p style="text-align: center;">{{pesan}}</p>
+
+<div  *ngIf="status==0">
+<ion-row>
+  <ion-col size="6">
+  <ion-button (click)="update()" color="unilever" style="width: 100%;">
+    <p style="font-size: 15px;">Update Sekarang</p>
+  </ion-button>
+</ion-col>
+<ion-col size="6">
+  <ion-button (click)="closeModal()" color="danger" style="width: 100%;">
+    <p style="font-size: 15px;">Nanti Saja</p>
+  </ion-button>
+</ion-col>
+</ion-row>
+</div>
+<ion-button *ngIf="status==1" (click)="update()" color="unilever" style="width: 100%;">
+  Update Sekarang
+</ion-button>
+</div>
+</div>
+

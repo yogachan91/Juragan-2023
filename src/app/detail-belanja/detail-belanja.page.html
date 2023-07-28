@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="unilever" class="head">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{item}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div >
+    <div *ngIf="!detail_peringkat_belanja">
+      <center>
+        <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+      </center>
+    </div>
+    <div *ngFor="let v of detail_peringkat_belanja">
+      <div class="card_2">
+        <div>
+          <ion-row>
+            <ion-col class="target-header">
+              <span class="inv2">{{v.NAMA_SKU}}</span>
+            </ion-col>             
+          </ion-row> 
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title"> KODE SKU </ion-col>
+            <ion-col class="bonus-text">{{v.KODE_SKU}}</ion-col>
+          </ion-row>
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title">
+              TOTAL BELANJA
+            </ion-col>
+            <ion-col class="bonus-text">
+              Rp. {{v.TOTAL_BELANJA|number}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title"> TOTAL TOP </ion-col>
+            <ion-col class="bonus-text"> {{v.TOTAL_FOP}}</ion-col>
+          </ion-row>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+</ion-content>

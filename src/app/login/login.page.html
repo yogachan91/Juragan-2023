@@ -1,0 +1,74 @@
+<ion-content>
+  <!-- <form (ngSubmit)="login()" [formGroup]="credentials">
+    <div class="input-group">
+      <ion-item>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+      <ion-item>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+    </div>
+ 
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
+  </form> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="logo">
+          <img class="img-logo" src="../../assets/image_new/logo_juragan_login.png">
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="12" style="text-align: center;">
+        <ion-button type="button" href="https://wa.me/6281288614405" fill="clear" color="light" target="_blank">
+          <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+          WA Support Juragan
+        </ion-button>
+      </ion-col>
+    </ion-row> -->
+    <br>
+    <br>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button type="button" expand="block" (click)="openLogin()"><ion-icon name="arrow-forward-circle-outline"></ion-icon>  <span style="margin-left: 3%;">Masuk</span></ion-button>
+      </ion-col>
+      <ion-col size="12">
+         <!--MIRROR-->
+        <!-- <ion-button type="button" disabled expand="block" fill="outline" color="light" (click)="openRegister()">Daftar</ion-button> -->
+        <ion-button type="button" expand="block" fill="outline" color="light" (click)="openRegister()"><ion-icon name="person-circle-outline"></ion-icon> <span style="margin-left: 3%;">Daftar</span></ion-button>
+      </ion-col>
+    </ion-row>
+    <div class="paddingbottom">
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <ion-row>
+      <ion-col size="3">
+        <!--MIRROR-->
+        <!-- <ion-button type="button" disabled fill="clear" color="light"><u>Lupa password Anda?</u></ion-button> -->
+        <a href={{infowa}}><img  class="img-wa" src="../../assets/image_new/wa.png"></a>
+      </ion-col>
+      <ion-col size="7" style="margin-left: 15%;">
+        <!--MIRROR-->
+        <!-- <ion-button type="button" disabled fill="clear" color="light"><u>Lupa password Anda?</u></ion-button> -->
+        <div style="margin-top: 15px;">
+        <a href={{url_panduan}} style="color: aliceblue; font-size: 15px; width: 100%;">Panduan Juragan</a>
+      </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  </ion-grid>
+  
+</ion-content>

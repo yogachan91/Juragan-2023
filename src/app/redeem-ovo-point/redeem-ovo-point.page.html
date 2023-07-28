@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="ovo">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-transform: capitalize;">Redeem OVO Point</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="ewallet-logo">
+          <img src="../../assets/imgs/ewallet/logo-wide-ovo.png">
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="ovoList">
+    <ion-radio-group *ngIf="balance">
+      <ion-item-divider style="background-color: rgba(240,242,179,.2); text-transform:capitalize;">
+        Pilih saldo OVO Point 
+      </ion-item-divider>
+      <ion-item *ngFor="let cb of ovoList">
+        <ion-label>
+          {{cb.gift_name}}
+          <span class="poin">{{cb.point|number}} poin</span>
+        </ion-label>
+        <ion-radio color="dark" (ionFocus)="updateSelected(cb)" [disabled]="(balance.remain_point_redeem < cb.point)"></ion-radio>      
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <div class="bar-top" *ngIf="selectedData">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="item-name">
+          {{selectedData.gift_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" class="item-left">
+            <div class="bartop-title ovo">Poin Untuk Redeem</div>
+            <div class="bartop-sub">{{selectedData.point|number}}</div>
+        </ion-col>
+        <ion-col size="6" class="item-right">
+            <div class="bartop-title ovo">Poin Anda</div>
+            <div class="bartop-sub">{{balance.remain_point_redeem|number}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="item-footer">
+          <!-- <strong>PERHATIAN:</strong>
+          <br>Saldo OVO Poin akan diisi ke nomor telepon berikut:
+          <br><strong class="ovo" style="font-size: 1.4em !important;">{{phonenumber}}</strong>
+          <br>Pastikan nomor di atas sudah terdaftar di aplikasi <strong class="ovo">OVO</strong> dan memiliki akun yang aktif.
+          <hr>
+          <em>Poin yang sudah ditukar dengan OVO Poin tidak dapat dibatalkan/dikembalikan.</em> -->
+          <div [innerHTML]="redeem_ovo_point_text"></div>
+        
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="selectedData">
+  <!--MIRROR-->
+   <!-- <ion-button   expand="block"  (click)="tukarpoin()" disabled expand="block"  color="ovo">Tukar Saldo OVO Point</ion-button> -->
+  <ion-button [disabled]="balance.remain_point_redeem < selectedData.point" expand="block" (click)="tukarpoin()" color="ovo">Tukar Saldo OVO Point</ion-button>
+</ion-footer>

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="unilever" class="head">
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="light" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Ganti No. HP
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p>
+    Untuk mengganti nomor HP yang terhubung dengan akun Anda, kami akan mengirimkan email berisi tautan khusus ke email Anda.
+  </p>
+  <p>
+    Ikuti petunjuk pada halaman penggantian nomor HP yang akan kami kirimkan, pada halaman itu Anda diharuskan mengisi kode OTP yang dikirimkan ke masing-masing nomor lama dan nomor baru Anda.
+  </p>
+  <p>
+    Klik tombol dibawah bila Anda setuju.
+  </p>
+  <ion-button color="unilever" expand="block" (click)="sendEmail()">
+    Ya, kirimkan email petunjuk
+  </ion-button>
+</ion-content>

@@ -1,0 +1,248 @@
+ion-title {
+    color: #f5f6f8;
+}
+.background{
+    background-color: #1505a8;
+}
+
+
+.boxed {
+    display: block;
+    border-bottom: 1px solid #e0e0e0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.inv {
+    display: block;
+    font-size: .8em;
+    line-height:2px;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.inv2 {
+    display: block;
+    font-size: .8em;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.dt {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+}
+
+.amount {
+    font-size: .8em;
+    line-height:2px;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.amount_invoice {
+    font-size: .8em;
+    text-align: right;
+    color: rgba(0,0,0,.7);
+}
+
+.bonus-title {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+}
+
+.bonus-title_invoice {
+    color: orange;
+    font-size: .8em;
+}
+.bonus-title_bold{
+    color: rgba(0,0,0,.6);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.detail_poin {
+    color: #e8712c;
+    font-weight: bold;
+    padding: 0;
+}
+
+.bonus-text {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+    text-align: right;
+    font-weight: 500;
+}
+.bonus-text-loyality {
+    color: rgba(0,0,0,.6);
+    font-size: .12px;
+    text-align: right;
+    font-weight: 500;
+}
+.bonus-text_bold {
+    color: rgba(0,0,0,.6);
+    text-align: right;
+    font-weight: 500;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.bonus-box {
+    background-color: #f5f6ff;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}
+
+.bonus-box_2 {
+    background-color: #effafb;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}
+
+.r-name {
+    display: block;
+    font-size: .8em;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.r-no {
+    font-size: .7em;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.r-date {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+}
+
+.r-poin {
+    // background-color: lavender;
+    font-size: .7em;
+    float: right;
+    font-weight: 400;
+    color: rgba(0,0,0,.5);
+    // padding:4px;
+    // border-radius:3px;
+
+}
+
+.cekresi {
+    float: right;
+    padding-left:5px;
+    color: #3D5CFF !important;
+}
+
+.lapor {
+    color: #ad0023 !important;
+}
+
+.selesai {
+    color: #1b6c00 !important;
+}
+
+.statuses {
+    font-weight: bold;
+    color: #7d93ff !important;
+}
+
+.statuses-selesai { 
+    font-weight: bold;
+    color: #00bb51 !important;
+}
+
+
+.top5-head {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #3D5CFF;
+}
+
+.top5-title {
+    color:#FFF;
+    
+    font-weight: 500;
+    display: block;
+    font-size: .9em;
+}
+
+.top5-content {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: #e1e1e1;
+}
+
+.top5-cat {
+    font-size: .9em;
+    font-weight: 500;
+}
+
+.top5-rightmonth {
+    font-size: .7em;
+    color: #4b80f0;
+    text-align: right;
+}
+
+.top5-leftmonth {
+    font-size: .7em;
+    color: #ec7b9c;
+}
+
+.top5-left, .top5-right {
+    font-size: .8em;
+    color: #444;
+}
+
+.top5-right {
+text-align: right;
+}
+.detail_list_poin{
+    border-style:solid; 
+    border-width: 0.5px; 
+    color: rgba(0,0,0,.6);
+    font-size: 12px;
+}
+.card_2 {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .card_3 {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: -35px;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card_2:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  
+  .ion-segment-buttons {
+    width: 590px;
+    min-width: 150px;
+  }
+  ion-spinner {
+    width: 0.8em;
+    height: 3em;
+  }
+ 

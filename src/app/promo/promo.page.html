@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Promo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="slidebanner">
+    <ion-row *ngFor="let s of slidebanner" (click)="goToBannerDetail(s)">
+      <ion-col size="12">
+        <img style="border-radius: 10px;" src="https://admin.ulidolphin.com/assets/uploads/banner/{{s.picture_location}}">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="!slidebanner">
+    <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;"><br>
+    <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;">
+  </div>
+</ion-content>

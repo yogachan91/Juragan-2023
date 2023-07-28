@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Kategori Redeem</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let r of redeemTypes" button (click)="openRedeem(r)">
+      <ion-thumbnail>
+        <img *ngIf="r.type_active" src="../assets/icon/{{r.type_icon}}" style="padding:12px;">
+        <img *ngIf="!r.type_active" style="-webkit-filter: grayscale(100%); filter: grayscale(100%); opacity: 0.5;" src="../assets/icon/{{r.type_icon}}" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label *ngIf="r.type_active">{{r.type_title}}</ion-label>
+      <ion-label *ngIf="!r.type_active" style="color:#999">{{r.type_title}}</ion-label>
+    </ion-item>
+    <ion-item  button (click)="openRedeem('voucher')">
+      <ion-thumbnail>
+        <img  src="../assets/icon/voucher_icon.png" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>eVoucher</ion-label>
+    </ion-item>
+    <ion-item  button (click)="openRedeem('peralatan_rumah_tangga')">
+      <ion-thumbnail>
+        <img  src="../assets/icon/household_icon.png" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Peralatan Rumah Tangga</ion-label>
+    </ion-item>
+    <ion-item  button (click)="openRedeem('elektronik')">
+      <ion-thumbnail>
+        <img  src="../assets/icon/electric_icon.png" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Elektronik</ion-label>
+    </ion-item>
+    <ion-item  button (click)="openRedeem('kendaraan')">
+      <ion-thumbnail>
+        <img  src="../assets/icon/kendaraan_icon.png" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Kendaraan</ion-label>
+    </ion-item>
+    <!-- <ion-item  button (click)="openRedeem('elt')">
+      <ion-thumbnail>
+        <img  src="../assets/icon/travel_icon.png" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Electronic</ion-label>
+    </ion-item> -->
+    
+    <!-- <ion-item button (click)="openRedeem_travel()">
+      <ion-thumbnail>
+        <img src="../assets/icon/lm.svg" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Travel</ion-label>
+    </ion-item> -->
+    <!-- <ion-item button (click)="openRedeem('lm')">
+      <ion-thumbnail>
+        <img src="../assets/icon/lm.svg" style="padding:12px;">
+      </ion-thumbnail>
+      <ion-label>Logam Mulia</ion-label>
+    </ion-item>
+    
+    <ion-item button (click)="openRedeem('ewallet')">
+      <ion-thumbnail>
+        <img src="../assets/icon/ewallet.svg" style="padding:7px;">
+      </ion-thumbnail>
+      <ion-label>E-Wallet</ion-label>
+    </ion-item>
+    <ion-item button (click)="openRedeem('tagihan')">
+      <ion-thumbnail>
+        <img src="../assets/icon/tagihan.svg" style="padding:10px;">
+      </ion-thumbnail>
+      <ion-label>Tagihan</ion-label>
+    </ion-item> -->
+  </ion-list>
+</ion-content>

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{pageTitle}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header lines="inset">
+      <ion-label>Total Redeem {{pageTitle}} Cash</ion-label>
+    </ion-list-header>
+    
+    <ion-item *ngFor="let e of redeemDetails">
+      <ion-avatar slot="start">
+        <img *ngIf="redeemItem.code == 'P02'" src="../../assets/imgs/ewallet/logo-gopay.png">
+        <img *ngIf="redeemItem.code == 'P01'" src="../../assets/imgs/ewallet/logo-ovo.png">
+        <img *ngIf="redeemItem.code == 'P05'" src="../../assets/imgs/ewallet/logo-shopee.png">
+        <img *ngIf="redeemItem.code == 'P03'" src="../../assets/imgs/ewallet/logo-dana.png">
+        <img *ngIf="redeemItem.code == 'P04'" src="../../assets/imgs/ewallet/logo-linkaja.png">
+      </ion-avatar>
+      <ion-label>
+        {{e.redeem_date}}
+      </ion-label>
+      <ion-note style="color:#444">
+        Rp. {{e.Amount|number}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

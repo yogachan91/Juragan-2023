@@ -1,0 +1,7 @@
+{
+  "name": "Juragan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

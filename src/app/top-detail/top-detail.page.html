@@ -1,0 +1,47 @@
+<ion-header>  
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{pageTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!details">
+    <img src="../../assets/imgs/loading.gif"><br>
+    <img src="../../assets/imgs/loading.gif">
+  </div>
+  <ion-grid  *ngFor="let d of details" class="boxed">
+    <ion-row>
+      <ion-col>
+        <div *ngIf="type=='Brand'" class="r-name">{{d.NAMA_SKU}}</div>
+        <div *ngIf="type=='Kategori'" class="r-name">{{d.NAMA_SKU}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="bonus-box">
+      <ion-col class="bonus-title">
+        KODE SKU
+      </ion-col>
+      <ion-col  class="bonus-text">
+        {{d.KODE_SKU}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="bonus-box">
+      <ion-col class="bonus-title">
+        TOTAL BELANJA
+      </ion-col>
+      <ion-col  class="bonus-text">
+        Rp. {{d.TOTAL_BELANJA|number}}
+      </ion-col>
+    </ion-row>
+    <ion-row class="bonus-box">
+      <ion-col class="bonus-title">
+        TOTAL FOP
+      </ion-col>
+      <ion-col  class="bonus-text">
+        {{d.TOTAL_FOP|number}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

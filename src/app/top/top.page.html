@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>top</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="top5-head">
+    <ion-row>
+      <ion-col>
+        <div class="top5-title">Top 5 Kategori</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="top5-content" *ngFor="let t of top5" (click)="details(t, 'Kategori')">
+    <ion-row>
+      <ion-col style="padding-top:0px; padding-bottom:0px">
+        <div class="top5-cat">{{t.CATEGORY}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="top5-leftmonth">{{prevMonth|date:'MMM'}}</div>
+        <div class="top5-left">Rp.{{t.TOTAL_PREVIOUS|number:'1.0-0'}}</div>
+      </ion-col>
+      <ion-col>
+        <div class="top5-rightmonth">{{curMonth|date:'MMM'}}</div>
+        <div class="top5-right">Rp.{{t.TOTAL_CURRENT|number:'1.0-0'}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="top5-head">
+    <ion-row>
+      <ion-col>
+        <div class="top5-title">Top 5 Brand</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="top5-content" *ngFor="let t of top5brand" (click)="details(t, 'Brand')">
+    <ion-row>
+      <ion-col style="padding-top:0px; padding-bottom:0px">
+        <div class="top5-cat">{{t.BRAND}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="top5-leftmonth">{{prevMonth|date:'MMM'}}</div>
+        <div class="top5-left">Rp.{{t.TOTAL_PREVIOUS|number:'1.0-0'}}</div>
+      </ion-col>
+      <ion-col>
+        <div class="top5-rightmonth">{{curMonth|date:'MMM'}}</div>
+        <div class="top5-right">Rp.{{t.TOTAL_CURRENT|number:'1.0-0'}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-title>Login</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="isLogin">
+    <form [formGroup]="credentials">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="input-group">
+              <ion-item>
+                <ion-input inputmode="email" formControlName="user_email" placeholder="Email Anda" autocomplete="off" autofocus="true" clear-input="true"></ion-input>
+              </ion-item>
+              <div *ngIf="(user_email.dirty || user_email.touched) && user_email.errors" class="errors">
+                <span *ngIf="user_email.errors?.required">Email harus diisi</span>
+              </div>
+              <ion-item>
+                <ion-input type="password" formControlName="password" placeholder="Password Anda" autocomplete="off" autofocus="true" clear-input="true"></ion-input>
+              </ion-item>
+              <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+                <span *ngIf="password.errors?.required">Password harus diisi</span>
+                <span *ngIf="password.errors?.minlength">Password minimal 8 karakter</span>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="closeModal()">Cancel</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button type="button" color="unilever" expand="block" (click)="checkOutlet()" [disabled]="!credentials.valid">Log in</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <!--MIRROR-->
+            <!-- <ion-button type="button" disabled fill="clear" color="unilever"><u>Email belum terdaftar?</u></ion-button> -->
+            <ion-button type="button" (click)="openEmail()" fill="clear" color="unilever"><u>Email belum terdaftar?</u></ion-button>
+            <ion-button type="button" (click)="openForgot()"  fill="clear" color="unilever"><u>Lupa password Anda?</u></ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+  <div *ngIf="isOTP">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          Untuk melakukan login pada aplikasi Juragan, kami telah mengirimkan email Kode OTP ke email Anda. isi 5 angka dalam email tersebut kemudian klik konfirmasi.
+          <div class="input-group">
+            <ion-item lines="none">
+              <ion-input inputmode="num" placeholder="Kode OTP" autocomplete="off" [(ngModel)]="OTPInput" autofocus="true" clear-input="true"></ion-input>
+            </ion-item>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type="button" color="unilever" expand="block" (click)="submitConfirmLogin()" [disabled]="!OTPInput">Konfirmasi OTP</ion-button>
+        </ion-col>
+      </ion-row>      
+    </ion-grid>
+  </div>
+
+  <div *ngIf="isEmail">
+    
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <span class="emailInputText">
+              Jika sebelumnya Anda telah terdaftar di aplikasi Juragan dan belum mendaftarkan email, silahkan isi kode outlet dan email pilihan Anda pada form di bawah ini.
+              <br>
+              Kami akan mengirimkan kode OTP ke nomor HP yang sudah didaftarkan bersama dengan data Outlet Anda.
+              <hr style="border-top: 1px solid #e1e1e1">
+              Untuk mendapatkan kode OTP klik tombol 'Kirim OTP' setelah mengisi Kode Outlet dan Email Anda.
+              <br><br>
+            </span>
+            
+            <div class="input-group">
+              <form [formGroup]="frmRegisterEmail">
+                <ion-item>
+                  <ion-input inputmode="num" placeholder="Kode Outlet" [disabled]="OTPRemote" autocomplete="off" formControlName="frmEmailOutletId" autofocus="true"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input inputmode="email" placeholder="Email Anda" [disabled]="OTPRemote" autocomplete="off" formControlName="frmEmailAddress"></ion-input>
+                </ion-item>
+              </form>
+
+              <ion-item>
+                <ion-input inputmode="num" placeholder="Kode OTP" autocomplete="off" [(ngModel)]="EmailOTPInput"></ion-input>
+                <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="setupotp()" [disabled]="!frmRegisterEmail.valid">Kirim OTP</ion-button>
+              </ion-item>
+            </div>
+            
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="closeEmail()">Cancel</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button type="button" color="unilever" expand="block" [disabled]="!frmRegisterEmail.valid || !EmailOTPInput" (click)="simpanEmail()">Simpan Email</ion-button>
+          </ion-col>
+        </ion-row>      
+      </ion-grid>
+    
+  </div>
+</ion-content>

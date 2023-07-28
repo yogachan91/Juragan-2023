@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detail SKU</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-scroll scrollX="true">
+  <ion-list>
+    <ion-item class="bonus-title_invoice">
+      {{title}}
+    </ion-item>
+    <ion-item *ngFor="let v of data">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" class="bonus-title_invoice">{{v.sku_code}}</ion-col>
+          <ion-col size="8" class="bonus-title_invoice">{{v.product_description}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" class="bonus-title">Quantity</ion-col>
+          <ion-col size="8" class="bonus-text">{{v.quantity}} Pcs</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" class="bonus-title">Pencapaian</ion-col>
+          <ion-col size="8" class="bonus-text">Rp. {{v.total}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-scroll>
+</ion-content>

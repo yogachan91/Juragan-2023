@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div  *ngFor="let pr of dataproduct">
+    <ion-item  *ngIf="pr.product.sku===sku"  (click)="gotoredeemdetail(pr.item.sku)" button>
+      <ion-thumbnail >
+        <!-- <img src="../assets/icon/lm.svg" style="padding:7px;"> -->
+        <img  src= {{pr.images[0].full}}>
+      </ion-thumbnail>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+           {{pr.product.name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="poin">
+            {{pr.item.name}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>  
+    </ion-item>
+  </div>
+    
+  </ion-list>
+  <p>&nbsp;</p>
+</ion-content>

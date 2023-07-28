@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="item">
+  <div style="text-align:center; margin:3% 20%;">
+    <img src={{dataitem.images[0].full}} style="display:block; width:100%; border-radius: 10px;">
+  </div>
+
+  <div class="bar-top" *ngIf="balance">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="item-name">
+          {{dataitem.product.name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" class="item-left">
+            <div class="bartop-title">Poin Untuk Redeem</div>
+            <div class="bartop-sub">{{poin|number}}</div>
+        </ion-col>
+        <ion-col size="6" class="item-right">
+            <div class="bartop-title">Poin Anda</div>
+            <div class="bartop-sub">{{balance.remain_point_redeem|number}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="item-footer">
+          <span *ngIf="balance.remain_point_redeem >= item">Poin Anda cukup untuk melakukan redeem</span>
+          <span *ngIf="balance.remain_point_redeem < item">oops.. poin Anda belum cukup, kurang {{item - balance.remain_point_redeem | number}} poin lagi.<br>Yuk belanja terus..</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="desk">
+    <p [innerHTML]="item.gift_desc"></p>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" style="text-align: center;">
+        <span style="display:block; font-size: 1em;">Quantity</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4" class="minus">
+        <ion-icon name="remove-circle-outline" (click)="minus()"></ion-icon>
+      </ion-col>
+      <ion-col size="4" style="text-align: center;">
+        <div class="qty">{{qty}}</div>
+      </ion-col>
+      <ion-col size="4" class="plus">
+        <ion-icon name="add-circle-outline" (click)="plus()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="balance">
+  <!-- <ion-button expand="full" (click)="logout()">Logout</ion-button> -->
+  <ion-button *ngIf="balance.remain_point_redeem >= poin" expand="block" (click)="setuptukarpoin()" color="primary">Redeem Sekarang</ion-button>
+</ion-footer>

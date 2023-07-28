@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Promo
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segmen">
+      <ion-segment-button value="promo">
+        <ion-label>Promo</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="info">
+        <ion-label>Info</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="segmen">    
+    <div *ngSwitchCase="'promo'">
+      <ion-grid *ngIf="slidebanner">
+        <ion-row *ngFor="let s of slidebanner" (click)="goToBannerDetail(s)">
+          <ion-col size="12">
+            <img style="border-radius: 10px;" src="https://admin.ulidolphin.com/assets/uploads/banner/{{s.picture_location}}">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div *ngIf="!slidebanner">
+        <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;"><br>
+        <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;">
+      </div>
+    </div>
+    <div *ngSwitchCase="'info'">
+      <ion-grid *ngIf="slideinfo">
+        <ion-row *ngFor="let s of slideinfo" (click)="goToBannerDetail(s)">
+          <ion-col size="12">
+            <img style="border-radius: 10px;" src="https://admin.ulidolphin.com/assets/uploads/banner/{{s.picture_location}}">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div *ngIf="!slideinfo">
+        <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;"><br>
+        <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;">
+      </div>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+</ion-content>

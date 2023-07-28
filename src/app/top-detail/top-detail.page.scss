@@ -1,0 +1,51 @@
+.boxed {
+    display: block;
+    border-bottom: 1px solid #e0e0e0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.r-name {
+    display: block;
+    font-size: .8em;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.r-no {
+    font-size: .7em;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.r-date {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+}
+
+.r-poin {
+    font-size: .7em;
+    float: right;
+    font-weight: 400;
+    color: rgba(0,0,0,.5);
+}
+
+.bonus-title {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+}
+
+.bonus-text {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+    text-align: right;
+    font-weight: 500;
+}
+
+.bonus-box {
+    background-color: #f5f6ff;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}

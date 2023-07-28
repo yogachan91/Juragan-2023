@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pilih E-Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item button (click)="toOvoPoint()">
+      <ion-avatar slot="start">
+        <img *ngIf="ovoOn" src="../../assets/imgs/ewallet/logo-ovo.png">
+        <img *ngIf="!ovoOn" style="-webkit-filter: grayscale(100%); filter: grayscale(100%); opacity: 0.6;" src="../../assets/imgs/ewallet/logo-ovo.png">
+      </ion-avatar>
+      <ion-label *ngIf="ovoOn"><span style="font-weight: bold; color: rgb(73, 50, 143)">OVO Point</span></ion-label>
+      <ion-label *ngIf="!ovoOn"><span style="font-weight: bold; color:#999">OVO Point</span></ion-label>
+    </ion-item>
+    <ion-item *ngFor="let r of redeemTypes" button (click)="toEwalletList(r)">
+      <ion-avatar slot="start">
+        <img *ngIf="r.type_active" src="../../assets/imgs/ewallet/{{r.type_icon}}">
+        <img *ngIf="!r.type_active" style="-webkit-filter: grayscale(100%); filter: grayscale(100%); opacity: 0.6;" src="../../assets/imgs/ewallet/{{r.type_icon}}">
+      </ion-avatar>
+      <ion-label *ngIf="r.type_active"><span style="font-weight: bold;" [style.color]="r.type_color">{{r.type_title}}</span></ion-label>
+      <ion-label *ngIf="!r.type_active"><span style="font-weight: bold; color:#999">{{r.type_title}}</span></ion-label>
+    </ion-item>
+  </ion-list>
+  <div class="bar-warning">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <div [innerHTML]="text_redeem_ewallet"></div>
+          <!-- <strong>Perhatian:</strong><br>Poin yang sudah ditukar dengan saldo E-Wallet tidak dapat dibatalkan/dikembalikan. -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

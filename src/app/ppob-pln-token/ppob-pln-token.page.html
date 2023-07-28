@@ -1,0 +1,221 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>PLN Prabayar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="pageStat == 'inquiry'"  class="ion-padding">
+    <ion-list>
+      <div class="input-group">
+        <ion-item lines="none">
+          <!-- <ion-label position="floating">No. Meter / ID Pel.</ion-label> -->
+          <ion-input inputmode="num" [(ngModel)]="idPelanggan" placeholder="No. Meter / ID Pelanggan" autocomplete="off" autofocus="true" clear-input="true"></ion-input>
+        </ion-item>
+      </div>
+      <div class="input-group">
+        <ion-item lines="none">
+          <ion-label>Pilih Nominal</ion-label>
+          <ion-select [(ngModel)]="nominal" (ionChange)="onChange($event)" placeholder="Nominal" okText="Pilih">
+            <ion-select-option *ngFor="let d of denom" [value]="d">{{d.gift_desc}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="disclaimer">
+            <span class="disclaimer-title">PERHATIAN</span>
+            <ul>
+              <li style="font-weight: bold;">Token yang sudah dibeli atau ditukar tidak dapat dibatalkan atau dikembalikan.</li>
+              <li>Redeem Listrik PLN tidak tersedia pada jam Cut Off (23:00 - 01:00).</li>
+              <li>Proses verifikasi redeem maksimal 2x24 jam hari kerja.</li>
+            </ul>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type="button" color="unilever" expand="block" [disabled]="!idPelanggan || !poinRedeem" (click)="check()">Lanjutkan Redeem</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="history()">Lihat History Pembelian</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="pageStat == 'payment'">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Item</p>
+          <h3>{{poinRedeem.gift_name}}</h3>        
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Deskripsi</p>
+          <h3>{{poinRedeem.gift_note}}</h3>        
+        </ion-label>
+      </ion-item>
+      <ion-item>        
+        <ion-label>
+          <p class="list-title">No. Meter / ID Pelanggan</p>
+          <h3><strong>{{idPelanggan}}</strong></h3>        
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Nama</p>
+          <h3><strong>{{ppobDetailsNama}}</strong></h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Nominal</p>
+          <h3>Rp. {{poinRedeem.amount | number}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <div class="bar-top" *ngIf="balance">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="item-name">
+            {{poinRedeem.gift_name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6 class="item-left">
+              <div class="bartop-title">Poin Untuk Redeem</div>
+              <div class="bartop-sub">{{poinRedeem.point}}</div>
+          </ion-col>
+          <ion-col col-6 class="item-right">
+              <div class="bartop-title">Poin Anda</div>
+              <div class="bartop-sub">{{balance.remain_point_new|number}}</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="item-footer">
+            <span *ngIf="balance.remain_point_new >= poinRedeem.point">Poin Anda cukup untuk melakukan redeem</span>
+            <span *ngIf="balance.remain_point_new < poinRedeem.point">oops.. poin Anda belum cukup, kurang {{poinRedeem.point - balance.remain_point_new | number}} poin lagi.<br>Yuk belanja terus..</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="ion-padding">
+      <div class="disclaimer">
+        <span class="disclaimer-title">Perhatian</span>
+        <ol>
+          <li style="font-weight: bold;">Token yang sudah dibeli atau ditukar tidak dapat dibatalkan atau dikembalikan.</li>
+          <li style="font-weight: bold;">Periksa kembali Nama yang muncul apakah sudah sesuai dengan ID Pelanggan yang Anda input.</li>
+          <li>Redeem Listrik PLN tidak tersedia pada jam Cut Off (23:00 - 01:00 WIB).</li>
+          <li>Proses verifikasi redeem maksimal 2x24 jam hari kerja.</li>      
+        </ol>        
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" fill="outline" color="unilever" (click)="cancel()">Cancel</ion-button>
+          </ion-col>
+          <ion-col>
+            <!-- loginsecret -->
+            <div *ngIf="!is_loginsecret">
+              <ion-button expand="block" color="unilever" [disabled]="balance.remain_point_new < poinRedeem.point" (click)="pay()">Beli</ion-button>
+            </div>
+            <div *ngIf="is_loginsecret">
+              <ion-button expand="block" color="unilever" disabled>Beli</ion-button>
+            </div>
+            <!-- loginsecret -->
+            
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </div>
+  </div>
+
+  <div *ngIf="pageStat == 'paid'">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Item</p>
+          <h3>{{poinRedeem.gift_name}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">No. Meter / ID Pelanggan</p>
+          <h3>{{idPelanggan}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Nominal</p>
+          <h3>Rp. {{poinRedeem.amount | number}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Status Pembelian</p>
+          <h3>{{detailPayment.response}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="!detailPayment.ref">
+        <ion-label>
+          <p class="list-title">Respon Operator</p>
+          <h3>{{detailPayment.message}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="list-title">Status Operator</p>
+          <h3>{{detailPayment.status}}</h3>
+        </ion-label>
+      </ion-item>
+      <div *ngIf="token">
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Nama</p>
+            <h3>{{token.token_nama}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Tarif</p>
+            <h3>{{token.token_tarif}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Daya</p>
+            <h3>{{token.token_daya}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Token</p>
+            <h3><strong>{{token.token_num}}</strong></h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Jumlah KWH</p>
+            <h3>{{token.token_kwh}}</h3>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+    <div padding>
+      <ion-button expand="block" color="unilever" (click)="checkstatus()">Refresh Status Pembelian</ion-button>
+      <ion-button expand="block" fill="outline" color="unilever" (click)="close()">Kembali Ke Halaman Depan</ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar color="unilever" class="head">
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="light" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Status Hadiah
+    </ion-title>
+     <ion-buttons slot="end">
+      <ion-button (click)="refresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="unilever" class="head">
+    <ion-segment [(ngModel)]="segmen">
+      <ion-segment-button value="diproses">
+        <ion-label>Diproses</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="dikirim">
+        <ion-label>Dikirim</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="diterima">
+        <ion-label>Diterima</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="segmen">
+    <div *ngSwitchCase="'diproses'">
+      <div *ngIf="!diproses">
+        <img src="../../assets/imgs/loading.gif"><br>
+        <img src="../../assets/imgs/loading.gif">
+      </div>
+      <div *ngIf="diproses">
+        <ion-grid  *ngFor="let r of diproses" class="boxed">
+          <ion-row>
+            <ion-col>
+              <div class="r-name">{{r.gift_name}}</div>
+              <div class="r-date">{{r.redeem_date|date}}</div>
+            </ion-col>
+            <ion-col>
+              <div class="r-no">#{{r.redeem_no|uppercase}}</div>
+              <div class="r-poin">
+                Poin Terpakai: <span style="font-weight: 500; color: rgba(0,0,0,.7);">{{r.point|number}}</span> Poin
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title">
+              Status Pengiriman
+            </ion-col>
+            <ion-col class="bonus-text">
+              <span class="statuses-selesai" *ngIf="r.status_pengiriman == 'SELESAI'">{{r.status_pengiriman}}</span>
+              <span class="statuses" *ngIf="r.status_pengiriman != 'SELESAI'">{{r.status_pengiriman}}</span>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'dikirim'">
+      <div *ngIf="!dikirim">
+        <img src="../../assets/imgs/loading.gif"><br>
+        <img src="../../assets/imgs/loading.gif">
+      </div>
+      <div *ngIf="dikirim">
+        <ion-grid  *ngFor="let r of dikirim" class="boxed">
+          <ion-row>
+            <ion-col>
+              <div class="r-name">{{r.gift_name}}</div>
+              <div class="r-date">{{r.redeem_date|date}}</div>
+            </ion-col>
+            <ion-col>
+              <div class="r-no">#{{r.redeem_no|uppercase}}</div>
+              <div class="r-poin">
+                Poin Terpakai: <span style="font-weight: 500; color: rgba(0,0,0,.7);">{{r.point|number}}</span> Poin
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title">
+              Status Pengiriman
+            </ion-col>
+            <ion-col class="bonus-text">
+              <span class="statuses-selesai" *ngIf="r.status_pengiriman == 'SELESAI'">{{r.status_pengiriman}}</span>
+              <span class="statuses" *ngIf="r.status_pengiriman != 'SELESAI'">{{r.status_pengiriman}}</span>
+            </ion-col>
+          </ion-row>
+          
+        </ion-grid>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'diterima'">
+      <div *ngIf="!diterima">
+        <img src="../../assets/imgs/loading.gif"><br>
+        <img src="../../assets/imgs/loading.gif">
+      </div>
+      <div *ngIf="diterima">
+        <ion-grid  *ngFor="let r of diterima" class="boxed">
+          <ion-row>
+            <ion-col>
+              <div class="r-name">{{r.gift_name}}</div>
+              <div class="r-date">{{r.redeem_date|date}}</div>
+            </ion-col>
+            <ion-col>
+              <div class="r-no">#{{r.redeem_no|uppercase}}</div>
+              <div class="r-poin">
+                Poin Terpakai: <span style="font-weight: 500; color: rgba(0,0,0,.7);">{{r.point|number}}</span> Poin
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="bonus-box">
+            <ion-col class="bonus-title">
+              Status Pengiriman
+            </ion-col>
+            <ion-col class="bonus-text">
+              <span class="statuses-selesai" *ngIf="r.status_pengiriman == 'SELESAI'">{{r.status_pengiriman}}</span>
+              <span class="statuses" *ngIf="r.status_pengiriman != 'SELESAI'">{{r.status_pengiriman}}</span>
+            </ion-col>
+          </ion-row>
+          
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,1547 @@
+<ion-header [translucent]="true">
+    <ion-toolbar class="background" color="unilever">
+      <ion-title> Riwayat </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="refresh()">
+          <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-toolbar class="background" color="unilever">
+      <ion-segment [(ngModel)]="segmen">
+        <ion-segment-button value="poin">
+          <ion-label>Poin</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="redeem">
+          <ion-label>Redeem</ion-label>
+        </ion-segment-button>
+        <!-- <ion-segment-button value="point_aktif">
+          <ion-label>Poin Aktif</ion-label>
+        </ion-segment-button> -->
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div [ngSwitch]="segmen">
+      <div *ngSwitchCase="'poin'">
+        <ion-segment [(ngModel)]="segmendetailpoin" style="color: blue">
+          <ion-segment-button value="page_basic_poin">
+            <ion-label>Basic Poin</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="fop_poin">
+            <ion-label>FOP Poin</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="growth_poin">
+            <ion-label>Growth Poin</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment [(ngModel)]="segmendetailpoin" style="color: blue">
+          <ion-segment-button value="distribution">
+            <ion-label>Distribution Poin</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="category_poin">
+            <ion-label>Category Poin</ion-label>
+          </ion-segment-button>
+            <ion-segment-button *ngIf="statuspalapa==statusdata"
+              value="palapa_poin"      
+            >
+              <ion-label >Palapa Poin</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+  
+        <br />
+  
+        <div [ngSwitch]="segmendetailpoin" >
+          <div *ngSwitchCase="'page_basic_poin'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+              <center>
+                <ion-spinner color="primary" style="font-size: 100px;"></ion-spinner>
+              </center>
+            </div>
+            <div *ngIf="basic_point">
+              <form [formGroup]="formpoint_basic_point" style="margin-top: -20px">
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                      (ionChange)="tahun_basic_point()"
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <div *ngIf="isvadasibasicpoint=='week'">
+                    <ion-select
+                      formControlName="week"
+                      interface="popover"
+                      placeholder="Week"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let wk of weeks" [value]="wk"
+                        >{{wk}}</ion-select-option
+                      >
+                    </ion-select>
+                    </div>
+  
+                    <div *ngIf="isvadasibasicpoint=='bulan'">
+                      <ion-select
+                        formControlName="week"
+                        interface="popover"
+                        placeholder="Bulan"
+                        style="
+                          border-style: solid;
+                          border-width: 0.1px;
+                          border-radius: 5px;
+                          border-color: #999999;
+                          height: 35px;
+                        "
+                      >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="08">Agustus</ion-select-option>
+                      <ion-select-option value="09">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                      </ion-select>
+                      </div>
+  
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_basic_point()"
+                      [disabled]="!formpoint_basic_point.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center
+                *ngIf="basic_point=='' || basic_point_detail==''"
+              >
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngIf="isvadasibasicpoint=='week'">
+                <div *ngIf="hidebasicpoint==1 ">
+                <div *ngFor="let i of basic_point" class="boxed">
+                  <ion-row>
+                    <ion-col class="target-header">
+                      <span class="inv2">{{i.description}}</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                    <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                    <ion-col class="bonus-text">
+                      {{i.tanggal_inject|date}}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                    <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                    <ion-col class="bonus-text_bold">
+                      {{i.Bonus_Point|number}}
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <ion-row  *ngIf="basic_point !=''">
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="descriptionnospace1= !descriptionnospace1"
+                  >
+                    <ion-icon
+                      *ngIf="!descriptionnospace1"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="descriptionnospace1"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+                <div id="tutorial" *ngIf="descriptionnospace1">
+                  <ion-grid *ngFor="let i of basic_point_detail">
+                    <ion-row *ngIf="i.invoice_reward != 0">
+                      <ion-col class="bonus-title_bold"> {{i.invoice_no}} </ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp {{i.invoice|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="i.invoice_reward != 0">
+                      <ion-col class="bonus-title">
+                        {{i.tanggal_invoice|date}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                      <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                      <ion-col class="bonus-text_bold"> {{i.Bonus_Poin}} </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>          
+              </div>
+            </div>
+            <div *ngIf="isvadasibasicpoint=='bulan'">
+              <div *ngIf="hidebasicpoint==1 ">
+                <div *ngFor="let i of basic_point" class="boxed">
+                  <ion-row>
+                    <ion-col class="target-header">
+                      <span class="inv2">{{i.description}}</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                    <ion-col class="bonus-title_bold">{{i.Description}}</ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                    <ion-col class="bonus-title"> Total Poin </ion-col>
+                    <ion-col class="bonus-text_bold">
+                      {{i.Total_Point|number}}
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <ion-row  *ngIf="basic_point !=''">
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="descriptionnospace1= !descriptionnospace1"
+                  >
+                    <ion-icon
+                      *ngIf="!descriptionnospace1"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="descriptionnospace1"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+                <div id="tutorial" *ngIf="descriptionnospace1">
+                  <ion-grid *ngFor="let i of basic_point_detail">
+                    <ion-row *ngIf="i.invoice_reward != 0">
+                      <ion-col class="bonus-title_bold"> {{i.invoice_no}} </ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp {{i.Total_Sales|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="i.invoice_reward != 0">
+                      <ion-col class="bonus-title">
+                        {{i.Tanggal_Invoice|date}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                      <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                      <ion-col class="bonus-text_bold"> {{i.Bonus_Point}} </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                      <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                      <ion-col class="bonus-text">
+                        {{i.Tanggal_Invoice|date}}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>          
+              </div>
+            </div>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'fop_poin'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+            </div>
+            <div>
+              <form [formGroup]="formpoint_fop_poin" style="margin-top: -20px">
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-select
+                      formControlName="bulan"
+                      interface="popover"
+                      placeholder="Bulan"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="08">Agustus</ion-select-option>
+                      <ion-select-option value="09">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_fop_poin()"
+                      [disabled]="!formpoint_fop_poin.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center *ngIf="!fop_poin_header">
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngIf="fop_poin_header">
+                <div class="boxed">
+                  <ion-row>
+                    <ion-col class="target-header">
+                      <span class="inv2">{{fop_poin_header.description}}</span>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="bonus-box1">
+                    <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                    <ion-col class="bonus-text">
+                      {{fop_poin_header.tanggal_inject|date}}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                    <ion-col class="bonus-text_bold">
+                      {{fop_poin_header.bonus_point|number}}
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <ion-row>
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="descriptionnospace= !descriptionnospace"
+                  >
+                    <ion-icon
+                      *ngIf="!descriptionnospace"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="descriptionnospace"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <div id="tutorial" *ngIf="descriptionnospace">
+                  <ion-row class="bonus-box">
+                    <ion-col class="bonus-title"> Total FOP </ion-col>
+                    <ion-col class="bonus-text_bold">
+                      {{fop_poin.total_FOP|number}}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="bonus-box">
+                    <ion-col class="bonus-title"> Total Sales </ion-col>
+                    <ion-col class="bonus-text_bold">
+                      Rp. {{fop_poin.Total_invoice | number}}
+                    </ion-col>
+                  </ion-row>
+                  <ion-grid *ngFor="let i of fop_poin_detail">
+                    <ion-row>
+                      <ion-col class="bonus-title_bold">
+                        {{i.invoice_no}}
+                      </ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp {{i.invoice|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="bonus-title">
+                        {{i.tanggal_invoice|date}}
+                      </ion-col>
+                    </ion-row>
+                    <!-- <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                  <ion-col class="bonus-text_bold"> {{i.Bonus_Poin}} </ion-col>
+                </ion-row> -->
+                  </ion-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'growth_poin'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+            </div>
+            <div *ngIf="basic_point">
+              <form [formGroup]="formpoint_growth_poin" style="margin-top: -20px">
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-select
+                      formControlName="bulan"
+                      interface="popover"
+                      placeholder="Bulan"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="8">Agustus</ion-select-option>
+                      <ion-select-option value="9">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_growth_poin()"
+                      [disabled]="!formpoint_growth_poin.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center
+                *ngIf="growth_poin==null || growth_poin=='' || !growth_poin"
+              >
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngFor="let i of growth_poin" class="boxed">
+                <ion-row>
+                  <ion-col class="target-header">
+                    <span class="inv2">{{i.description}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                  <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                  <ion-col class="bonus-text"> {{i.inject_date|date}} </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                  <ion-col class="bonus-text_bold"> {{i.point|number}} </ion-col>
+                </ion-row>
+  
+                <ion-row>
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="i.descriptionnospace= !i.descriptionnospace"
+                  >
+                    <ion-icon
+                      *ngIf="i.descriptionnospace"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="!i.descriptionnospace"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+                <div id="tutorial" *ngIf="!i.descriptionnospace">
+                  <ion-grid>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title">Target Growth</ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp. {{i.target|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="bonus-box">
+                      <ion-col class="bonus-title">Pencapaian Sales </ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp. {{i.achievement|number}}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'distribution'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+            </div>
+            <div *ngIf="basic_point">
+              <form
+                [formGroup]="formpoint_distribution"
+                style="margin-top: -20px"
+              >
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-select
+                      formControlName="bulan"
+                      interface="popover"
+                      placeholder="Bulan"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="08">Agustus</ion-select-option>
+                      <ion-select-option value="09">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_distribution()"
+                      [disabled]="!formpoint_distribution.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center
+                *ngIf="distribution_poin==null || distribution_poin=='' || !distribution_poin"
+              >
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngFor="let i of distribution_poin" class="boxed">
+                <ion-row>
+                  <ion-col class="target-header">
+                    <span class="inv2">{{i.description}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                  <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                  <ion-col class="bonus-text"> {{i.inject_date|date}} </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                  <ion-col class="bonus-text_bold"> {{i.point|number}} </ion-col>
+                </ion-row>
+  
+                <ion-row>
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="i.descriptionnospace= !i.descriptionnospace"
+                  >
+                    <ion-icon
+                      *ngIf="i.descriptionnospace"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="!i.descriptionnospace"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+                <div id="tutorial" *ngIf="!i.descriptionnospace">
+                  <ion-grid>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title"
+                        >Target Distribution (SKU)</ion-col
+                      >
+                      <ion-col class="bonus-text_bold">
+                        {{i.target|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title"
+                        >Pencapaian Distribution (SKU)
+                      </ion-col>
+                      <ion-col class="bonus-text_bold">
+                        {{i.achievement|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title">Pencapaian Sales</ion-col>
+                      <ion-col class="bonus-text_bold">
+                        Rp. {{i.actual_sales|number}}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'category_poin'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+            </div>
+            <div *ngIf="basic_point">
+              <form
+                [formGroup]="formpoint_category_poin"
+                style="margin-top: -20px"
+              >
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-select
+                      formControlName="bulan"
+                      interface="popover"
+                      placeholder="Bulan"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="08">Agustus</ion-select-option>
+                      <ion-select-option value="09">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_category_point()"
+                      [disabled]="!formpoint_category_poin.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center
+                *ngIf="category_point==null || category_point=='' || !category_point"
+              >
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngFor="let i of category_point" class="boxed">
+                <ion-row>
+                  <ion-col class="target-header">
+                    <span class="inv2">{{i.description}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                  <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                  <ion-col class="bonus-text"> {{i.inject_date|date}} </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                  <ion-col class="bonus-text_bold"> {{i.point|number}} </ion-col>
+                </ion-row>
+  
+                <ion-row>
+                  <ion-col class="bonus-title">
+                    <ion-col class="detail_poin"> Detail Poin </ion-col>
+                  </ion-col>
+                  <ion-col
+                    class="bonus-text"
+                    (click)="i.descriptionnospace= !i.descriptionnospace"
+                  >
+                    <ion-icon
+                      *ngIf="i.descriptionnospace"
+                      id="tutorialIcon"
+                      name="add-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                    <ion-icon
+                      *ngIf="!i.descriptionnospace"
+                      name="ellipsis-horizontal-circle-outline"
+                      style="color: #e8712c; font-size: 20px; font-weight: bold"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+                <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+                <div id="tutorial" *ngIf="!i.descriptionnospace">
+                  <ion-grid>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title">Target Sales</ion-col>
+                      <ion-col class="bonus-text_bold">
+                        {{i.isValue}} {{i.target|number}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="bonus-box1">
+                      <ion-col class="bonus-title">Pencapaian Sales</ion-col>
+                      <ion-col class="bonus-text_bold">
+                        {{i.isValue}} {{i.achievement|number}}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'palapa_poin'">
+            <div *ngIf="!basic_point">
+              <!-- <img src="../../assets/imgs/loading.gif" /><br />
+              <img src="../../assets/imgs/loading.gif" /> -->
+            </div>
+            <div *ngIf="basic_point">
+              <form [formGroup]="formpoint_palapa" style="margin-top: -20px">
+                <ion-row style="background-color: ghostwhite">
+                  <ion-col>
+                    <ion-select
+                      formControlName="tahun"
+                      interface="popover"
+                      placeholder="Tahun"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option *ngFor="let th of tahun" [value]="th"
+                        >{{th}}</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-select
+                      formControlName="bulan"
+                      interface="popover"
+                      placeholder="Bulan"
+                      style="
+                        border-style: solid;
+                        border-width: 0.1px;
+                        border-radius: 5px;
+                        border-color: #999999;
+                        height: 35px;
+                      "
+                    >
+                      <ion-select-option value="01">Januari</ion-select-option>
+                      <ion-select-option value="02">Februari</ion-select-option>
+                      <ion-select-option value="03">Maret</ion-select-option>
+                      <ion-select-option value="04">April</ion-select-option>
+                      <ion-select-option value="05">Mei</ion-select-option>
+                      <ion-select-option value="06">Juni</ion-select-option>
+                      <ion-select-option value="07">Juli</ion-select-option>
+                      <ion-select-option value="08">Agustus</ion-select-option>
+                      <ion-select-option value="09">September</ion-select-option>
+                      <ion-select-option value="10">Oktober</ion-select-option>
+                      <ion-select-option value="11">November</ion-select-option>
+                      <ion-select-option value="12">Desember</ion-select-option>
+                    </ion-select>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button
+                      size="small"
+                      (click)="filterpoint_palapa()"
+                      [disabled]="!formpoint_palapa.valid"
+                      expand="block"
+                      color="primary"
+                    >
+                      <strong>Cari</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
+              <center *ngIf="palapa==null || palapa=='' || !palapa">
+                <h5>Tidak ada data pada bulan ini</h5>
+              </center>
+              <div *ngFor="let i of palapa" class="boxed">
+                <ion-row>
+                  <ion-col class="target-header">
+                    <span class="inv2">{{i.description}}</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box1">
+                  <ion-col class="bonus-title"> Tanggal Inject </ion-col>
+                  <ion-col class="bonus-text">
+                    {{i.inject_date|date}}
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Pencapaian Sales </ion-col>
+                  <ion-col class="bonus-text_bold">
+                    {{i.achievement|number}}
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="i.invoice_reward != 0" class="bonus-box">
+                  <ion-col class="bonus-title"> Bonus Poin </ion-col>
+                  <ion-col class="bonus-text_bold">
+                    {{i.point|number}}
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngSwitchCase="'point_aktif'">
+        <!-- <div *ngIf="!invoices">
+          <img src="../../assets/imgs/loading.gif"><br>
+          <img src="../../assets/imgs/loading.gif">
+        </div>-->
+        <div>
+          <!-- <form [formGroup]="formpoint_invoice">
+          <ion-row style="background-color:ghostwhite">
+            <ion-col>
+              <ion-select formControlName="tahun" interface="popover" placeholder="Tahun" style="border-style:solid; border-width: 0.1px; border-radius: 5px; border-color: #999999;height: 35px;">
+                <ion-select-option  *ngFor="let th of tahun" [value]="th">{{th}}</ion-select-option>
+              </ion-select>
+          </ion-col>
+          <ion-col >
+            <ion-select formControlName="bulan" interface="popover" placeholder="Bulan" style="border-style:solid; border-width: 0.1px; border-radius: 5px; border-color: #999999; height: 35px;">
+              <ion-select-option value="1">Januari</ion-select-option>
+              <ion-select-option value="2">Februari</ion-select-option>
+              <ion-select-option value="3">Maret</ion-select-option>
+              <ion-select-option value="4">April</ion-select-option>
+              <ion-select-option value="5">Mei</ion-select-option>
+              <ion-select-option value="6">Juni</ion-select-option>
+              <ion-select-option value="7">Juli</ion-select-option>
+              <ion-select-option value="8">Agustus</ion-select-option>
+              <ion-select-option value="9">September</ion-select-option>
+              <ion-select-option value="10">Oktober</ion-select-option>
+              <ion-select-option value="11">November</ion-select-option>
+              <ion-select-option value="12">Desember</ion-select-option>
+            </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-button size="small" (click)="filterpoint_invoice()" [disabled]="!formpoint_invoice.valid"  expand="block" color="primary">
+            <strong>Cari</strong>
+          </ion-button>
+      </ion-col>
+      </ion-row>
+      </form> -->
+          <center *ngIf="poin_aktif==null || poin_aktif=='' || !poin_aktif">
+            <h5>Tidak ada data pada bulan ini</h5>
+          </center>
+          <ion-grid class="boxed" *ngFor="let v of poin_aktif">
+            <ion-row>
+              <ion-col class="target-header">
+                <span class="inv2">{{v.point_month_name}}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="target-header">
+                <span class="inv"></span>
+                <span class="dt"></span>
+              </ion-col>
+              <ion-col class="amount">
+                <!-- Rp. {{i.invoice|number}} -->
+              </ion-col>
+            </ion-row>
+  
+            <ion-row class="bonus-box">
+              <ion-col class="target-header">
+                <span class="dt">Total Poin</span>
+              </ion-col>
+              <ion-col class="amount_invoice">
+                {{v.point_amount|number}}
+              </ion-col>
+            </ion-row>
+  
+            <ion-row class="bonus-box">
+              <ion-col class="target-header">
+                <span class="dt">Expired</span>
+              </ion-col>
+              <ion-col class="amount_invoice">
+                <span class="detail_poin">{{v.point_exp_date}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+  
+      <div *ngSwitchCase="'redeem'">
+        <ion-segment [(ngModel)]="segmenlogammulia" style="color: blue">
+          <ion-segment-button value="logammulia">
+            <ion-label>Logam Mulia</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="ewalet">
+            <ion-label>E-Walet</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="travel">
+            <ion-label>Tour & Travel</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="segmenlogammulia">
+          <div *ngSwitchCase="'logammulia'">
+            <div *ngFor="let r of redeems">
+              <ion-grid *ngIf="r.gift_name.slice(0,5) =='Logam'" class="boxed">
+                <ion-row>
+                  <ion-col>
+                    <div class="r-name">{{r.gift_name}}</div>
+                    <div class="r-date">{{r.redeem_date|date}}</div>
+                  </ion-col>
+                  <ion-col>
+                  <div (click)="copyinvoice(r.redeem_no)"   class="r-no" >#{{r.redeem_no|uppercase}}</div>
+                   <div class="r-poin">
+                      Poin Terpakai:
+                      <span style="font-weight: 500; color: rgba(0, 0, 0, 0.7)"
+                        >{{r.point|number}}</span
+                      >
+                      Poin
+                    </div>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  class="bonus-box"
+                  *ngIf="r.tanggal_pengiriman && r.tanggal_pengiriman != ''"
+                >
+                  <ion-col class="bonus-title"> Tanggal Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.tanggal_pengiriman|date}}
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> Status Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span
+                      class="statuses-selesai"
+                      *ngIf="r.status_delivery == 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                    <span class="statuses" *ngIf="r.status_delivery != 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.status_delivery === 'DIKIRIM' || r.status_delivery == 'SELESAI'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+   
+                <ion-row class="bonus-box" *ngIf="r.penerima && r.penerima != null">
+                  <ion-col class="bonus-title">Penerima </ion-col>
+                  <ion-col class="bonus-text"> {{r.penerima}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.status_delivery === 'DITERIMA'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.picture_location && r.picture_location != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Foto Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span (click)="lihatresi(r)" class="cekresi">
+                      &raquo; Lihat Foto
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.keterangan && r.keterangan != null"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">Keterangan</ion-col>
+                  <ion-col class="bonus-text"> {{r.keterangan}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.status_delivery && r.status_delivery == 'DITERIMA'"
+                >
+                <!--PRODUCTION-->
+                  <!-- <ion-col class="btn-title">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="lapor(r.redeem_no, r.gift_name)"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="selesai(r.redeem_no)"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col> -->
+                  <!--MIRROR-->
+                  <ion-col class="btn-title">
+                    <ion-button 
+                    [disabled]="true"
+                      size="small"
+                      fill="outline"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      [disabled]="true"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+  
+          <div *ngSwitchCase="'ewalet'">
+            <div *ngFor="let r of redeems">
+              <ion-grid *ngIf="r.gift_name.slice(0,5) !='Logam'" class="boxed">
+                <ion-row>
+                  <ion-col>
+                    <div class="r-name">{{r.gift_name}}</div>
+                    <div class="r-date">{{r.redeem_date|date}}</div>
+                  </ion-col>
+                  <ion-col>
+                    <div (click)="copyinvoice(r.redeem_no)" class="r-no">#{{r.redeem_no|uppercase}}</div>
+                    <div class="r-poin">
+                      Poin Terpakai:
+                      <span style="font-weight: 500; color: rgba(0, 0, 0, 0.7)"
+                        >{{r.point|number}}</span
+                      >
+                      Poin
+                    </div>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  class="bonus-box"
+                  *ngIf="r.tanggal_pengiriman && r.tanggal_pengiriman != ''"
+                >
+                  <ion-col class="bonus-title"> Tanggal Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.tanggal_pengiriman|date}}
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> Status Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span
+                      class="statuses-selesai"
+                      *ngIf="r.status_delivery == 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                    <span class="statuses" *ngIf="r.status_delivery != 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.status_delivery === 'DIKIRIM'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  class="bonus-box"
+                  *ngIf="r.penerima && r.penerima != null"
+                >
+                  <ion-col class="bonus-title"> Penerima </ion-col>
+                  <ion-col class="bonus-text"> {{r.penerima}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.status_delivery === 'DITERIMA'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.picture_location && r.picture_location != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Foto Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span (click)="lihatresi(r)" class="cekresi">
+                      &raquo; Lihat Foto
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.keterangan && r.keterangan != null"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">Keterangan</ion-col>
+                  <ion-col class="bonus-text"> {{r.keterangan}} </ion-col>
+                </ion-row> 
+  
+                <ion-row
+                  *ngIf="r.status_delivery && r.status_delivery == 'DITERIMA'"
+                >
+                <!--PRODUCTION-->
+                  <!-- <ion-col class="btn-title">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="lapor(r.redeem_no, r.gift_name)"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="selesai(r.redeem_no)"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col> -->
+                  <!--MIRROR-->
+                  <ion-col class="btn-title">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      [disabled]="true"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      [disabled]="true"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+          <div *ngSwitchCase="'travel'">
+            <div *ngFor="let r of redeems">
+              <ion-grid *ngIf="r.type_code =='10'" class="boxed">
+                <ion-row>
+                  <ion-col>
+                    <div class="r-name">{{r.gift_name}}</div>
+                    <div class="r-date">{{r.redeem_date|date}}</div>
+                  </ion-col>
+                  <ion-col>
+                    <div (click)="copyinvoice(r.redeem_no)" class="r-no">#{{r.redeem_no|uppercase}}</div>
+                    <div class="r-poin">
+                      Poin Terpakai:
+                      <span style="font-weight: 500; color: rgba(0, 0, 0, 0.7)"
+                        >{{r.point|number}}</span
+                      >
+                      Poin
+                    </div>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  class="bonus-box"
+                  *ngIf="r.tanggal_pengiriman && r.tanggal_pengiriman != ''"
+                >
+                  <ion-col class="bonus-title"> Tanggal Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.tanggal_pengiriman|date}}
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row class="bonus-box">
+                  <ion-col class="bonus-title"> Status Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span
+                      class="statuses-selesai"
+                      *ngIf="r.status_delivery == 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                    <span class="statuses" *ngIf="r.status_delivery != 'SELESAI'"
+                      >{{r.status_delivery}}</span
+                    >
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.status_delivery === 'DIKIRIM'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  class="bonus-box"
+                  *ngIf="r.penerima && r.penerima != null"
+                >
+                  <ion-col class="bonus-title"> Penerima </ion-col>
+                  <ion-col class="bonus-text"> {{r.penerima}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.expedisi && r.expedisi != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Kurir Pengiriman </ion-col>
+                  <ion-col class="bonus-text"> {{r.expedisi}} </ion-col>
+                </ion-row>
+  
+                <ion-row
+                  *ngIf="r.status_delivery === 'DITERIMA'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">
+                    Nomor Resi
+                    <!-- <span (click)="cekresi(r.no_awb)" class="cekresi">
+                    Cek Resi
+                  </span> -->
+                  </ion-col>
+                  <ion-col class="bonus-text">
+                    {{r.no_voucher}}
+                    <span (click)="cekresi(r.no_voucher)" class="cekresi">
+                      &raquo; Cek Resi
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.picture_location && r.picture_location != '-'"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title"> Foto Pengiriman </ion-col>
+                  <ion-col class="bonus-text">
+                    <span (click)="lihatresi(r)" class="cekresi">
+                      &raquo; Lihat Foto
+                    </span>
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="r.keterangan && r.keterangan != null"
+                  class="bonus-box"
+                >
+                  <ion-col class="bonus-title">Keterangan</ion-col>
+                  <ion-col class="bonus-text"> {{r.keterangan}} </ion-col>
+                </ion-row> 
+  
+                <ion-row
+                  *ngIf="r.status_delivery && r.status_delivery == 'DITERIMA'"
+                >
+                <!--PRODUCTION-->
+                  <!-- <ion-col class="btn-title">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="lapor(r.redeem_no, r.gift_name)"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      (click)="selesai(r.redeem_no)"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col> -->
+                  <!--MIRROR-->
+                  <ion-col class="btn-title">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      [disabled]="true"
+                      expand="block"
+                      color="danger"
+                    >
+                      <strong>Lapor</strong>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col class="btn-text">
+                    <ion-button
+                      size="small"
+                      fill="outline"
+                      [disabled]="true"
+                      expand="block"
+                      color="success"
+                    >
+                      <strong>Selesai</strong>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>&nbsp;</p>
+  </ion-content>
+  

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{item.gift_name}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img *ngIf="item" src="https://admin.ulidolphin.com/assets/uploads/buktipengiriman/{{item.picture_location}}" style="width: 100%; padding: 0px 0px; display: block">
+  <div style="padding:10px; background-color: bisque; border-radius: 10px;">
+  <p style="font-size: 10px; font-style: italic; text-align: center;">Foto yang diambil adalah merupakan tanggung jawab kurir. Juragan tidak bertanggung jawab atas hasil dari foto terlampir.</p>
+</div>
+</ion-content>

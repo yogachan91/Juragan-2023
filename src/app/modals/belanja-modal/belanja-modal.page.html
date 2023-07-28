@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Peringkat Belanja</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <div *ngFor="let v of peringkat_belanja" (click)="detail(v.Division)">
+      <ion-row>
+        <ion-col class="bonus-title_bold">{{v.Division}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="bonus-title_tgl1">{{bln}}</ion-col>
+        <ion-col class="bonus-text_tgl1">{{bln_next}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="bonus-title">Rp. {{v.TOTAL_PREVIOUS|number}}</ion-col>
+        <ion-col class="bonus-text_right">Rp. {{v.TOTAL_CURRENT|number}}</ion-col>
+      </ion-row>
+      <div class="underline"></div>
+    </div>
+
+    
+  </div>
+</ion-content>

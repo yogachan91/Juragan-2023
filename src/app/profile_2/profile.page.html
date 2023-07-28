@@ -1,0 +1,390 @@
+<ion-header>
+  <ion-toolbar color="unilever" class="head">
+    <ion-buttons slot="start">
+      <ion-back-button text="" color="light" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Profil
+    </ion-title>
+     <ion-buttons slot="end">
+      <ion-button (click)="refresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="unilever" class="head">
+    <ion-segment [(ngModel)]="segmen">
+      <ion-segment-button value="alamat">
+        <ion-label>Profil Toko</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pengiriman">
+        <ion-label>Alamat Pengiriman</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  
+  <div [ngSwitch]="segmen">    
+    <div *ngSwitchCase="'alamat'">
+      <div *ngIf="!varAlamat">
+        <img src="../../assets/imgs/loading.gif"><br>
+        <img src="../../assets/imgs/loading.gif">
+      </div>
+      <div *ngIf="varAlamat">
+        <ion-list>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Nama Toko</p>
+              <h2>{{varAlamat.store_name}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Nama Pemilik</p>
+              <h2>{{varAlamat.NAMA_PEMILIK}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Alamat Toko</p>
+              <h2>{{varAlamat.ALAMAT_TOKO}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Area</p>
+              <h2>{{varAlamat.area}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Distributor</p>
+              <h2>{{varAlamat.distributor}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>No. HP</p>
+              <h2>{{varAlamat.no_hp}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Alamt Email</p>
+              <h2>{{varAlamat.user_email}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Tanggal Lahir</p>
+              <h2>{{varAlamat.birth_date}}</h2>
+            </ion-label>
+            <div *ngIf="varAlamat.birth_date ==null">
+            <ion-button id="open-modal">Pilih Tanggal Lahir</ion-button>
+              <ion-modal   
+              [initialBreakpoint]="0.5" trigger="open-modal">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime 
+                    #datetime
+                    [isDateEnabled]="isWeekday" 
+                    presentation="date"
+                    [(ngModel)]="today"
+                    displayFormat="YYYY-MM-DD"
+                    pickerFormat="DD-MM-YY HH:mm:ss"
+                    [showDefaultButtons]="true"
+                   
+                    (click)="updatetgllahir(datetime.value)" 
+                    >
+                  </ion-datetime>
+                  
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+            </div>
+          </ion-item>
+        </ion-list>
+        <!-- <div class="ion-padding">
+          <ion-button expand="block" color="success" (click)="lihatstatushadiah()">Lihat Status Hadiah</ion-button>
+        </div>
+        <ion-list>
+          <ion-list-header lines="inset">
+            <ion-label>Redeem e-Wallet bulan ini</ion-label>
+          </ion-list-header>
+          
+          <ion-item *ngFor="let e of redeemEwallet" button (click)="toEwalletList(e)">
+            <ion-avatar slot="start">
+              <img *ngIf="e.code == 'P02'" src="../../assets/imgs/ewallet/logo-gopay.png">
+              <img *ngIf="e.code == 'P01'" src="../../assets/imgs/ewallet/logo-ovo.png">
+              <img *ngIf="e.code == 'P05'" src="../../assets/imgs/ewallet/logo-shopee.png">
+              <img *ngIf="e.code == 'P03'" src="../../assets/imgs/ewallet/logo-dana.png">
+              <img *ngIf="e.code == 'P04'" src="../../assets/imgs/ewallet/logo-linkaja.png">
+            </ion-avatar>
+            <ion-label>
+              <span *ngIf="e.code == 'P02'" style="color: #08a413;">GoPay</span>
+              <span *ngIf="e.code == 'P01'" style="color: #49328f;">OVO Cash</span>
+              <span *ngIf="e.code == 'P05'" style="color: #e84a2b;">ShopeePay</span>
+              <span *ngIf="e.code == 'P03'" style="color: #0e89e1;">Dana</span>
+              <span *ngIf="e.code == 'P04'" style="color: #e02428;">LinkAja</span>
+            </ion-label>
+            <ion-note style="color:#444">
+              Rp. {{e.Amount|number}}
+            </ion-note>
+          </ion-item>
+        </ion-list> -->
+
+      </div>
+    </div>
+    <div *ngSwitchCase="'pengiriman'">
+      <div *ngIf="!varPengiriman">
+        <img src="../../assets/imgs/loading.gif"><br>
+        <img src="../../assets/imgs/loading.gif">
+      </div>
+      <div *ngIf="varPengiriman">
+        <ion-list *ngIf="!editMode">
+           
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Nama Penerima</p>
+              <h2>{{varPengiriman.nama_penerima}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>No. Telp Penerima</p>
+              <h2>{{varPengiriman.no_telp}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Nama Jalan</p>
+              <h2>{{varPengiriman.nama_jalan}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>No. Rumah</p>
+              <h2>{{varPengiriman.no_rumah}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Provinsi</p>
+              <h2>{{varPengiriman.provinsi}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Kota/Kabupaten</p>
+              <h2>{{varPengiriman.kota}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Kecamatan</p>
+              <h2>{{varPengiriman.kecamatan}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Kelurahan</p>
+              <h2>{{varPengiriman.kelurahan}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Kode Pos</p>
+              <h2>{{varPengiriman.kode_pos}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Lokasi</p>
+              <h4>{{varPengiriman.lokasi}}</h4>
+             <!--  <ion-button expand="block" (click)="setOpen(true)">Lihat Lokasi</ion-button>
+            <ion-modal [isOpen]="isModalOpen">
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title>Lokasi Pengiriman</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button (click)="setOpen(false)">Tutup</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                  <h6>{{varPengiriman.lokasi}}</h6>
+                  <iframe *ngIf="varPengirimanlokasi" [src]="varPengirimanlokasi" style="width:100%;height:100%;frameBorder=0" scrolling="yes" frameBorder="0" ></iframe>
+                </ion-content>
+              </ng-template>
+            </ion-modal> -->
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Detail Lokasi</p>
+              <h2>{{varPengiriman.alamat_detail}}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">
+              <p>Foto Lokasi</p>
+              <div *ngIf="fotolokasi !=null">
+              <ion-button expand="block" (click)="setOpenFoto(true)">Lihat Foto</ion-button>
+              </div>
+            <ion-modal [isOpen]="isModalOpenFoto">
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title>Foto Lokasi</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button (click)="setOpenFoto(false)">Tutup</ion-button>
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                  <ion-img *ngIf="fotolokasi" [src]="fotolokasi" style="width:100%;"></ion-img>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
+            </ion-label>
+          </ion-item>
+          
+        </ion-list>
+        <ion-grid *ngIf="!editMode">
+          <ion-row>
+            <ion-col>
+              <!--MIRROR-->
+              <!-- <ion-button type="button" color="unilever" expand="block" disabled fill="outline" (click)="edit()">Edit Pengiriman</ion-button> -->
+              <!--PRODUCTION-->
+              <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="edit()">Edit Alamat Pengiriman</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <form  *ngIf="editMode" [formGroup]="alamatPengiriman">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Nama Penerima <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-input formControlName="nama_penerima"></ion-input>
+              <p *ngIf="alamatPengiriman.value['nama_penerima']==''" class="notifikasi">Mohon Isi Nama Penerima</p>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">No. Telp Penerima <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-input formControlName="no_telp" type="number"></ion-input>
+              <p *ngIf="alamatPengiriman.value['no_telp']==''" class="notifikasi">Mohon Isi No. Telp / HP Penerima</p>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Nama Jalan <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-input formControlName="nama_jalan"></ion-input>
+              <p *ngIf="alamatPengiriman.value['nama_jalan']==''" class="notifikasi">Mohon Isi Nama Jalan</p>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">No. Rumah <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-input formControlName="no_rumah"></ion-input>
+              <p *ngIf="alamatPengiriman.value['no_rumah']==''" class="notifikasi">Mohon Isi No. Rumah</p>
+            </ion-item>
+            <ion-item *ngIf="province">
+              <ion-label position="floating">Provinsi <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-select formControlName="provinsi" (ionChange)="onSelectedChange('prov')" placeholder="Provinsi" okText="Pilih">
+                <ion-select-option *ngFor="let p of province" [value]="p.province">{{p.province}}</ion-select-option>
+              </ion-select>
+              <p *ngIf="alamatPengiriman.value['provinsi']==''" class="notifikasi">Mohon Isi Provinsi</p>
+            </ion-item>
+            <ion-item *ngIf="city">
+              <ion-label position="floating">Kota/Kabupaten</ion-label>
+              <ion-select formControlName="kota" (ionChange)="onSelectedChange('city')" placeholder="Kota/Kabupaten" okText="Pilih">
+                <ion-select-option *ngFor="let c of city" [value]="c.city">{{c.city}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="subdistrict">
+              <ion-label position="floating">Kecamatan</ion-label>
+              <ion-select formControlName="kecamatan" (ionChange)="onSelectedChange('subdistrict')" placeholder="Kecamatan" okText="Pilih">
+                <ion-select-option *ngFor="let s of subdistrict" [value]="s.subdistrict">{{s.subdistrict}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="village">
+              <ion-label position="floating">Kelurahan/Desa</ion-label>
+              <ion-select formControlName="kelurahan" (ionChange)="onSelectedChange('village')" placeholder="Kelurahan/Desa" okText="Pilih">
+                <ion-select-option *ngFor="let v of village" [value]="v.village">{{v.village}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="postalcode">
+              <ion-label position="floating">Kode Pos <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-select formControlName="kode_pos" placeholder="Kode Pos" okText="Pilih" >
+                <ion-select-option *ngFor="let p of postalcode" [value]="p.postal_code">{{p.postal_code}}</ion-select-option>
+              </ion-select>
+              <p *ngIf="alamatPengiriman.value['kode_pos']==''" class="notifikasi">Mohon Isi Kode Pos</p>
+
+            </ion-item>
+            <ion-item *ngIf="postalcode" >
+              <ion-label position="stacked">Lokasi <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-textarea formControlName="lokasi" placeholder="Lokasi" readonly="" [value]="lokasi"></ion-textarea>
+              <p *ngIf="alamatPengiriman.value['lokasi']==''" class="notifikasi">Silahkan Pilih Lokasi</p>
+            </ion-item>
+            <ion-grid *ngIf="postalcode">
+              <ion-row>
+                <ion-col>
+                  <ion-button *ngIf="postalcode" type="button" (click)="map_pengiriman()" expand="block" fill="outline" >
+                    <ion-icon   name="location-outline"></ion-icon> Pilih Lokasi
+                  </ion-button>
+                </ion-col>
+                
+              </ion-row>
+            </ion-grid>
+            <ion-item *ngIf="postalcode" >
+              <ion-label position="stacked">Detail Lokasi <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-textarea formControlName="alamat_detail" placeholder="Detail Lokasi"></ion-textarea>
+              <p *ngIf="alamatPengiriman.value['alamat_detail']==''" class="notifikasi">Mohon Isi Detail Lokasi</p>
+            </ion-item>
+            <!-- <ion-item *ngIf="postalcode">
+              <ion-label position="floating">Tipe Gambar</ion-label>
+              <ion-select formControlName="tipe_gambar"  (ionChange)="onSelectedChange('tipe_gambar')" placeholder="Tipe Gambar" okText="Pilih">
+                <ion-select-option [value]="camera">Camera</ion-select-option>
+                <ion-select-option [value]="galeri">Galeri</ion-select-option>
+              </ion-select>
+            </ion-item> -->
+           
+            <div style="margin-left:10px; margin-right:10px" *ngIf="postalcode">
+              <ion-label position="floating">Foto Lokasi <span class="bintang">* (Wajib diisi)</span></ion-label>
+              <ion-input formControlName="imagelokasi" type="hidden" [value]="foto_upload"></ion-input>
+              <ion-button   type="button" (click)="selectImage()" expand="block" fill="outline">
+                <ion-icon name="camera"></ion-icon>
+              </ion-button>
+              <!-- <ion-button *ngIf="tipe_gambar=='galeri'" type="button" (click)="addPhotoToGallery()" expand="block" fill="outline">
+                <ion-icon name="image-outline"></ion-icon>
+              </ion-button> -->
+              <p *ngIf="alamatPengiriman.value['imagelokasi']==''" class="notifikasi">Mohon Isi Foto Lokasi</p>
+            </div>
+            <div *ngIf="postalcode">
+              <center>
+                  <ion-img [src]="foto_upload" style="width:50%;"></ion-img>
+                </center>
+            </div>
+            
+          </ion-list> 
+          
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-button type="button" color="unilever" expand="block" fill="outline" (click)="cancelEdit()">Cancel</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button type="button" color="unilever" expand="block" (click)="submitEditPengiriman()" [disabled]="!alamatPengiriman.valid">Simpan Alamat</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</ion-content>
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-title>v 5.0.6</ion-title>
+  </ion-toolbar>
+</ion-footer>

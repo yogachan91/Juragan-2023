@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>History PLN Prabayar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <div *ngIf="!historyList">
+    <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;"><br>
+    <img src="../../assets/imgs/loading.gif" style="border-radius: 10px;">
+  </div>
+
+  <ion-list *ngIf="historyList">
+    <ion-item *ngFor="let item of historyList" (click)="itemSelected(item)" button>
+      <ion-label>
+        <h3 class="item-title">{{item.gift_name}}</h3>
+        <p class="item-desc">{{item.redeem_date | date}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

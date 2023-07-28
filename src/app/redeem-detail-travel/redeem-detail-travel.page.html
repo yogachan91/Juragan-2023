@@ -1,0 +1,51 @@
+<ion-header>  
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Travel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="item">
+  <div style="text-align:center; margin:3% 20%;">
+    <img src="https://admin.ulidolphin.com/assets/uploads/redeem/{{item.pict_location}}" style="display:block; width:100%; border-radius: 10px;">
+  </div>
+
+  <div class="bar-top" *ngIf="balance">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="item-name">
+          {{item.gift_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" class="item-left">
+            <div class="bartop-title">Poin Untuk Redeem</div>
+            <div class="bartop-sub">{{item.point|number}}</div>
+        </ion-col>
+        <ion-col size="6" class="item-right">
+            <div class="bartop-title">Poin Anda</div>
+            <div class="bartop-sub">{{balance.remain_point_redeem|number}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="item-footer">
+          <span *ngIf="balance.remain_point_redeem >= item.point">Poin Anda cukup untuk melakukan redeem</span>
+          <span *ngIf="balance.remain_point_redeem < item.point">oops.. poin Anda belum cukup, kurang {{item.point-balance.remain_point_redeem | number}} poin lagi.<br>Yuk belanja terus..</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="desk ion-padding">
+    <h4 class="redeem-header">Syarat & Ketentuan:</h4>
+    <p [innerHTML]="item.gift_desc"></p>
+    <hr>
+    <p [innerHTML]="item.gift_note"></p>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="balance">
+  <!-- <ion-button expand="full" (click)="logout()">Logout</ion-button> -->
+  <ion-button *ngIf="balance.remain_point_redeem >= item.point" expand="block"  (click)="tukarpoint()" color="primary">Redeem Sekarang</ion-button>
+  <ion-button *ngIf="balance.remain_point_redeem < item.point" expand="block" disabled="true" color="primary">Poin Belum Cukup</ion-button>
+</ion-footer>

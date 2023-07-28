@@ -1,0 +1,175 @@
+ion-title {
+    color: #3D5CFF;
+}
+
+.boxed {
+    display: block;
+    border-bottom: 1px solid #e0e0e0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.inv {
+    display: block;
+    font-size: .8em;
+    line-height:2px;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.inv2 {
+    display: block;
+    font-size: .8em;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.dt {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+}
+
+.amount {
+    font-size: .8em;
+    line-height:2px;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.amount_invoice {
+    font-size: .8em;
+    text-align: right;
+    color: rgba(0,0,0,.7);
+}
+
+.bonus-title {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+}
+
+.bonus-title_invoice {
+    color: orange;
+    font-size: .8em;
+}
+
+.bonus-text {
+    color: rgba(0,0,0,.6);
+    font-size: .7em;
+    text-align: right;
+    font-weight: 500;
+}
+
+.bonus-box {
+    background-color: #f5f6ff;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}
+
+.r-name {
+    display: block;
+    font-size: .8em;
+    color: rgba(0,0,0,.7);
+    font-weight:600;
+    color: #3D5CFF !important;
+}
+
+.r-no {
+    font-size: .7em;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+}
+
+.r-date {
+    color: rgba(0,0,0,.5);
+    font-size: .7em;
+}
+
+.r-poin {
+    // background-color: lavender;
+    font-size: .7em;
+    float: right;
+    font-weight: 400;
+    color: rgba(0,0,0,.5);
+    // padding:4px;
+    // border-radius:3px;
+
+}
+
+.cekresi {
+    float: right;
+    padding-left:5px;
+    color: #3D5CFF !important;
+}
+
+.lapor {
+    color: #ad0023 !important;
+}
+
+.selesai {
+    color: #1b6c00 !important;
+}
+
+.statuses {
+    font-weight: bold;
+    color: #7d93ff !important;
+}
+
+.statuses-selesai { 
+    font-weight: bold;
+    color: #00bb51 !important;
+}
+
+
+.top5-head {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #3D5CFF;
+}
+
+.top5-title {
+    color:#FFF;
+    
+    font-weight: 500;
+    display: block;
+    font-size: .9em;
+}
+
+.top5-content {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: #e1e1e1;
+}
+
+.top5-cat {
+    font-size: .9em;
+    font-weight: 500;
+}
+
+.top5-rightmonth {
+    font-size: .7em;
+    color: #4b80f0;
+    text-align: right;
+}
+
+.top5-leftmonth {
+    font-size: .7em;
+    color: #ec7b9c;
+}
+
+.top5-left, .top5-right {
+    font-size: .8em;
+    color: #444;
+}
+
+.top5-right {
+text-align: right;
+}

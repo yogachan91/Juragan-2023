@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Unilever Produk </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <hr>
+  <ion-row>
+    <ion-col  size="8" class="bonus-title">
+      <span class="detail_poin">Kecantikan dan Kesehatan</span>
+    </ion-col>
+    <ion-col class="bonus-text" (click)="open= !open">
+      <ion-icon
+        *ngIf="!open"
+        id="tutorialIcon"
+        name="add-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="open"
+        name="ellipsis-horizontal-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+  <div *ngIf="open">
+    <ion-list>
+      <ion-item *ngFor="let v of getkdk">
+        <ion-label style="font-size: 12px;">{{v.brand}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <hr style="border-style: solid;border-width: 0.1px; border-color: rgb(206, 204, 204)">
+
+  
+
+  <ion-row>
+    <ion-col class="bonus-title">
+      <ion-col class="detail_poin">Nutrisi</ion-col>
+    </ion-col>
+    <ion-col class="bonus-text" (click)="open1= !open1">
+      <ion-icon
+        *ngIf="!open1"
+        id="tutorialIcon"
+        name="add-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="open1"
+        name="ellipsis-horizontal-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+  <div *ngIf="open1">
+    <ion-list>
+      <ion-item *ngFor="let v of getnutrisi">
+        <ion-label style="font-size: 12px;">{{v.brand}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <hr style="border-style: solid;border-width: 0.1px; border-color: rgb(206, 204, 204)">
+
+ 
+  <ion-row>
+    <ion-col class="bonus-title">
+      <ion-col class="detail_poin">Perawatan Pribadi</ion-col>
+    </ion-col>
+    <ion-col class="bonus-text" (click)="open12= !open12">
+      <ion-icon
+        *ngIf="!open12"
+        id="tutorialIcon"
+        name="add-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="open12"
+        name="ellipsis-horizontal-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+  <div *ngIf="open12">
+    <ion-list>
+      <ion-item *ngFor="let v of getperawatan_pribadi">
+        <ion-label style="font-size: 12px;">{{v.brand}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <hr style="border-style: solid;border-width: 0.1px; border-color: rgb(206, 204, 204)">
+
+  <ion-row>
+    <ion-col class="bonus-title">
+      <ion-col class="detail_poin">Perawatan Rumah</ion-col>
+    </ion-col>
+    <ion-col class="bonus-text" (click)="open123= !open123">
+      <ion-icon
+        *ngIf="!open123"
+        id="tutorialIcon"
+        name="add-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="open123"
+        name="ellipsis-horizontal-circle-outline"
+        style="color: #e8712c; font-size: 25px; font-weight: bold"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="border-style: solid;border-width: 0.1px; border-color: rgb(150, 148, 148)"></div> -->
+  <div *ngIf="open123">
+    <ion-list>
+      <ion-item *ngFor="let v of getperawatan_rumah">
+        <ion-label style="font-size: 12px;">{{v.brand}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <hr style="border-style: solid;border-width: 0.1px; border-color: rgb(206, 204, 204)">
+
+  <p>&nbsp;</p>
+</ion-content>

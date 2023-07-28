@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="unilever">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>History Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="!itemDetails || !ppobDetails">
+    <ion-item>
+      <img src="../../assets/imgs/loading.gif" >
+    </ion-item>
+    <ion-item>
+      <img src="../../assets/imgs/loading.gif" >
+    </ion-item>    
+  </ion-list>
+  <div *ngIf="itemDetails && ppobDetails">
+    <div *ngIf="ppobtype == 'plntoken'">
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Item</p>
+            <h3>{{itemDetails.gift_name}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">No. Redeem</p>
+            <h3>{{itemDetails.redeem_no}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Redeem Date</p>
+            <h3>{{itemDetails.redeem_date | date}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">No. Meter / ID Pelanggan</p>
+            <h3>{{ppobDetails.number}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Nama</p>
+            <h3>{{ppobDetails.nama}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Tarif</p>
+            <h3>{{ppobDetails.tarif}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Daya</p>
+            <h3>{{ppobDetails.daya}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Jumlah Kwh</p>
+            <h3>{{ppobDetails.kwh}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Status Operator</p>
+            <h3>{{ppobDetails.status}}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <p class="list-title">Token</p>
+            <h3>{{ppobDetails.token}}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-padding">
+        <ion-button fill="outline" expand="block" color="unilever" (click)="reload()">Refresh Status Pembelian</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
